@@ -12,10 +12,7 @@ precedence = (
    ('right','UMINUS')
 )
 
-def p_command_count(p):
-	'''command : count of ID'''
-	p[0] = ('count', p[3])
-	
+    
 
 def p_command_include(p):
 	'''command : include STRING'''
@@ -90,6 +87,11 @@ def p_command_def(p):
 def p_command_let(p):
 	'''command : let ID EQUALS expression'''
 	p[0] = ('let', p[2], p[4])
+    
+    
+def p_command_let_command(p):
+	'''command : let ID EQUALS command'''
+	p[0] = ('let', p[2], p[4])
   
 ##########################################  
 #### Arithmetic expressions
@@ -126,7 +128,8 @@ def p_expression_binop(p):
                   | expression MINUS expression
                   | expression MULTIPLY expression
                   | expression DIVIDE expression
-                  | expression POWER expression'''
+                  | expression POWER expression
+    '''
     p[0] = ('BINOP',p[2],p[1],p[3])
 
 
@@ -141,7 +144,8 @@ def p_relexpression(p):
                      | expression GT expression
                      | expression GE expression
                      | expression EQUALS expression
-                     | expression NE expression'''
+                     | expression NE expression
+    '''
     p[0] = ('RELOP',p[2],p[1],p[3])
 
 
@@ -154,7 +158,8 @@ def p_variable(p):
     '''variable : ID
                 | ID LPAREN expression RPAREN
                 | ID LPAREN expression COMMA expression RPAREN
-                | DBID'''
+                | DBID
+                '''
     if len(p) == 2:
        p[0] = (p[1],None,None)
     elif len(p) == 5:
@@ -171,6 +176,7 @@ def p_parlist(p):
        p[0].append(p[3])
     else:
        p[0] = [p[1]]
+       
 
 
 # Error rule for syntax errors

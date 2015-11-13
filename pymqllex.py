@@ -2,7 +2,7 @@
 import ply.lex as lex
 
 
-keywords = ('print', 'as', 'in', 'search', 'each', 'end', 'return', 'continue', 'if', 'then', 'def', 'include', 'outcsv', 'count', 'of', 'let')
+keywords = ('print', 'as', 'in', 'search', 'each', 'end', 'return', 'continue', 'if', 'then', 'def', 'include', 'outcsv', 'let')
 
 
 tokens = keywords + (

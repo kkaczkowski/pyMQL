@@ -1,0 +1,84 @@
+RESERWED KEYWORDS: search, if, then, end, each, output, import, in, clean, count, first, last, random, about, print, column, def, invalidate
+column - zwaraca listê wartoœci z tabeli dla danej kolumny
+min, max, average - zwraca dla kolumy z tablicy rz¹dan¹ wartoœæ po agregacji
+tranasaction, commit, rollback, insert, update
+
+output outcsv as csv in "c:/temp/result.txt"
+connect to oracle as myOracle with "host:;user:;password:;"
+focus to myOracle
+
+include test1
+
+search persons as SELECT name, age, '' as empty FROM person;
+search persons where name = last_person@name;
+search persons where add or name = last_person@name groupby age;
+search persons groupby age;
+search persons having sum(age) > 10;
+search persons where clean
+search persons as SELECT age FROM person 
+                  WHERE age > 10 
+                  GROUP BY age 
+                  HAVING sum(age) > 10; 
+
+
+first_person   = first persons
+last_person    = last   from persons
+random_person  = random from persons
+number_records = count of persons
+
+
+infotype = (34, 56, 21, 45)
+randominfotype = random from infotype
+if randominfotype = 36 then
+   search myquery as SELECT name, wiek, @randominfotype as infotype, nazwisko FROM wi_infotype;
+end
+if randominfotype = 56 then
+   search myquery as SELECT name, wiek, @randominfotype+10 as infotype, nazwisko FROM wi_infotype;
+end
+
+switch randominfotype as type
+    case 34
+         search myquery as SELECT name, wiek, @randominfotype as infotype, nazwisko FROM wi_infotype;
+    end
+end
+
+if count of persons < 10 then
+   foreach person in persons
+     if person@age < 10 then
+        person@age = 20
+        outcsv person
+     end
+     log person
+   end
+end
+
+if ('kow%' 'dor%' 'and%') in last_person@name then
+end
+
+
+if last_person@name in ('kowalski' 'barkabara' 'dorota') then
+   search persons where add or name = last_person@name
+   log first persons
+   outcsv first persons
+   about persons
+end
+
+column persons@name as names
+each names as name
+   print name
+end
+
+print 'end script'
+
+def pesel(s)
+   replace 'aaa' in s to 'aaa'
+end
+
+list = (1 2 3 4 5)
+each list as item
+   print item
+end
+
+each 1..100 as num
+   print num
+end
