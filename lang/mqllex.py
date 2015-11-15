@@ -36,6 +36,7 @@ tokens = keywords + (
    'GE',
    'NE',
    'COMMA',
+   'SEMI',
    'ID',
    'DBID',
    'STRING',
@@ -60,6 +61,7 @@ t_GT         = r'>'
 t_GE         = r'>='
 t_NE         = r'<>'
 t_COMMA      = r'\,'
+t_SEMI       = r';'
 t_SELECT     = r'SELECT .*?;'
 t_INSERT     = r'INSERT .*?;'
 t_UPDATE     = r'UPDATE .*?;'

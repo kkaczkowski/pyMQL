@@ -10,5 +10,5 @@ def runcmd():
         except EOFError:
             break
         if not s: continue
-        result = lang.mqlparse.parse(s)
+        result = lang.mqlparse.parse(s + '\n')
         pprint(result)
