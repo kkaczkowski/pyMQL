@@ -24,8 +24,8 @@ def p_command_outcsv(p):
 
 	
 def p_command_print_empty(p):
-	'''command : print'''
-	p[0] = ('print', None)
+	'''command : print optend'''
+	p[0] = ('print')
 
 		
 def p_command_print_expression(p):
@@ -81,6 +81,11 @@ def p_command_let(p):
 def p_command_let_command(p):
 	'''command : let ID EQUALS command'''
 	p[0] = ('let', p[2], p[4])
+    
+    
+def p_command_let_command_error(p):
+	'''command : let error'''
+	p[0] = 'Invalid let command.'
 
 
 def p_command_list(p):
@@ -181,8 +186,15 @@ def p_parlist(p):
        p[0] = [p[1]]
 
 
-def p_empty(p):
-    '''empty :'''
+def p_optend(p):
+    '''optend : COMMA 
+              | SEMI
+              |'''
+    if len(p)  == 2:
+         p[0] = p[1]
+    else:
+         p[0] = None
+
 
 
 # Error rule for syntax errors
