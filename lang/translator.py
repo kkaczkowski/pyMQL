@@ -1,10 +1,13 @@
-import argparse
+import lang.mqllex
+import lang.mqlparse
+import yacc.yacc as yacc
+from pprint import pprint
 
-class MQLToPython(argparse.Action):
-    
-    def __init__(self, option_strings, dest, nargs=None, **kwargs):
-        super(MQLToPython, self).__init__(option_strings, dest, **kwargs)
+class MQLToPython:
         
-    def __call__(self, parser, namespace, values, option_string=None):
-        print('%r %r %r' % (namespace, values, option_string))
-        setattr(namespace, self.dest, values)
+    def translate(self, filename):
+        mql_source = open(filename, 'r').read()
+        result = lang.mqlparse.parse(mql_source)
+        print()
+        pprint(result)
+        

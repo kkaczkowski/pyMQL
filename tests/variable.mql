@@ -1,6 +1,1 @@
 let name="Atkins"
-let sum = 2 + 3
-let res = (1 + 1) * sum
-print name
-print sum
-print res

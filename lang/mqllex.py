@@ -67,53 +67,42 @@ t_STRING     = r'\".*?\"'
 t_FLOAT      = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))'
 
 
-
-
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
-
 def t_error(t):
     print("Illegal character %s" % t.value[0])
     t.lexer.skip(1)
-    
+
+
 def t_DBID(t):
     r'[a-z]*@[a-z]*'
     if t.value in keywords:
         t.type = t.value
     return t
-    
+
+
 def t_ID(t):
     r'[a-z][a-z0-9_]*'
     if t.value in keywords:
         t.type = t.value
     return t
-    
+
+
 def t_INTEGER(t):
     r'\d+'
     t.value = float(t.value)    
     return t
-    
+
+
 def t_COMMENT(t):
     r'\#.*'
     pass
 
+
+def t_NEWLINE(t):
+    r'\n+'
+    t.lexer.lineno += 1
+
+
 lex.lex(debug=0)
 lexer = lex.lex()
 
-
-if __name__ == '__main__':
-	data = '''
-	#Test wyrazenia
-	print 2+3*3+address@street
-	'''
-	
-	lexer.input(data)
-	
-	# Tokenize
-	while True:
-	    tok = lexer.token()
-	    if not tok: 
-	        break      # No more input
-	    print(tok)
 	

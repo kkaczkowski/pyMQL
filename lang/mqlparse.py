@@ -11,8 +11,7 @@ precedence = (
    ('left', 'POWER'),
    ('right','UMINUS')
 )
-
-    
+   
 
 def p_command_include(p):
 	'''command : include STRING'''
@@ -85,8 +84,7 @@ def p_command_def(p):
 
 
 def p_command_let(p):
-	'''command : let ID EQUALS expression
-    '''
+	'''command : let ID EQUALS expression'''
 	p[0] = ('let', p[2], p[4])
     
     
@@ -188,7 +186,8 @@ def p_parlist(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    print('Syntax error in input! Line : %s' %p.lexer.lineno)
+    print('>>> %s' %p.lexer.lexdata.split('\n')[p.lexer.lineno - 1])
 
 
 mqlparser = yacc.yacc()
