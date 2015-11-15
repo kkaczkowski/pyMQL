@@ -1,3 +1,2 @@
-let name = "Atkins"
+let name = 10
 let age  = 30
-

@@ -8,19 +8,19 @@ Rule 2     command -> outcsv ID in STRING
 Rule 3     command -> print
 Rule 4     command -> print expression
 Rule 5     command -> search ID as sql
-Rule 6     sql -> SELECT
-Rule 7     sql -> INSERT
-Rule 8     sql -> UPDATE
-Rule 9     command -> foreach ID in ID
-Rule 10    command -> end
-Rule 11    command -> return
-Rule 12    command -> continue
-Rule 13    command -> if relexpression then
-Rule 14    command -> def ID LPAREN RPAREN
-Rule 15    command -> def ID LPAREN parlist RPAREN
-Rule 16    command -> let ID EQUALS expression
-Rule 17    command -> let ID EQUALS command
-Rule 18    command -> list ID EQUALS LPAREN parlist RPAREN
+Rule 6     command -> foreach ID in ID
+Rule 7     command -> end
+Rule 8     command -> return
+Rule 9     command -> continue
+Rule 10    command -> if relexpression then
+Rule 11    command -> def ID LPAREN RPAREN
+Rule 12    command -> def ID LPAREN parlist RPAREN
+Rule 13    command -> let ID EQUALS expression
+Rule 14    command -> let ID EQUALS command
+Rule 15    command -> list ID EQUALS LPAREN parlist RPAREN
+Rule 16    sql -> SELECT
+Rule 17    sql -> INSERT
+Rule 18    sql -> UPDATE
 Rule 19    expression -> variable
 Rule 20    expression -> INTEGER
 Rule 21    expression -> FLOAT
@@ -43,54 +43,56 @@ Rule 37    variable -> ID LPAREN expression RPAREN
 Rule 38    variable -> DBID
 Rule 39    parlist -> parlist COMMA expression
 Rule 40    parlist -> expression
+Rule 41    empty -> <empty>
 
 Terminals, with rules where they appear
 
 COMMA                : 39
 DBID                 : 38
 DIVIDE               : 28
-EQUALS               : 16 17 18 34
+EQUALS               : 13 14 15 34
 FLOAT                : 21
 GE                   : 33
 GT                   : 32
-ID                   : 2 5 9 9 14 15 16 17 18 36 37
-INSERT               : 7
+ID                   : 2 5 6 6 11 12 13 14 15 36 37
+INSERT               : 17
 INTEGER              : 20
 LE                   : 31
-LPAREN               : 14 15 18 24 37
+LPAREN               : 11 12 15 24 37
 LT                   : 30
 MINUS                : 23 26
 MULTIPLY             : 27
 NE                   : 35
 PLUS                 : 25
 POWER                : 29
-RPAREN               : 14 15 18 24 37
-SELECT               : 6
+RPAREN               : 11 12 15 24 37
+SELECT               : 16
 STRING               : 1 2 22
-UPDATE               : 8
+UPDATE               : 18
 as                   : 5
-continue             : 12
-def                  : 14 15
-end                  : 10
+continue             : 9
+def                  : 11 12
+end                  : 7
 error                : 
-foreach              : 9
-if                   : 13
-in                   : 2 9
+foreach              : 6
+if                   : 10
+in                   : 2 6
 include              : 1
-let                  : 16 17
-list                 : 18
+let                  : 13 14
+list                 : 15
 outcsv               : 2
 print                : 3 4
-return               : 11
+return               : 8
 search               : 5
-then                 : 13
+then                 : 10
 
 Nonterminals, with rules where they appear
 
-command              : 17 0
-expression           : 4 16 23 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 37 39 40
-parlist              : 15 18 39
-relexpression        : 13
+command              : 14 0
+empty                : 
+expression           : 4 13 23 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 37 39 40
+parlist              : 12 15 39
+relexpression        : 10
 sql                  : 5
 variable             : 19
 
@@ -104,16 +106,16 @@ state 0
     (3) command -> . print
     (4) command -> . print expression
     (5) command -> . search ID as sql
-    (9) command -> . foreach ID in ID
-    (10) command -> . end
-    (11) command -> . return
-    (12) command -> . continue
-    (13) command -> . if relexpression then
-    (14) command -> . def ID LPAREN RPAREN
-    (15) command -> . def ID LPAREN parlist RPAREN
-    (16) command -> . let ID EQUALS expression
-    (17) command -> . let ID EQUALS command
-    (18) command -> . list ID EQUALS LPAREN parlist RPAREN
+    (6) command -> . foreach ID in ID
+    (7) command -> . end
+    (8) command -> . return
+    (9) command -> . continue
+    (10) command -> . if relexpression then
+    (11) command -> . def ID LPAREN RPAREN
+    (12) command -> . def ID LPAREN parlist RPAREN
+    (13) command -> . let ID EQUALS expression
+    (14) command -> . let ID EQUALS command
+    (15) command -> . list ID EQUALS LPAREN parlist RPAREN
 
     include         shift and go to state 6
     outcsv          shift and go to state 3
@@ -132,7 +134,7 @@ state 0
 
 state 1
 
-    (13) command -> if . relexpression then
+    (10) command -> if . relexpression then
     (30) relexpression -> . expression LT expression
     (31) relexpression -> . expression LE expression
     (32) relexpression -> . expression GT expression
@@ -168,9 +170,9 @@ state 1
 
 state 2
 
-    (10) command -> end .
+    (7) command -> end .
 
-    $end            reduce using rule 10 (command -> end .)
+    $end            reduce using rule 7 (command -> end .)
 
 
 state 3
@@ -182,7 +184,7 @@ state 3
 
 state 4
 
-    (9) command -> foreach . ID in ID
+    (6) command -> foreach . ID in ID
 
     ID              shift and go to state 25
 
@@ -227,15 +229,15 @@ state 6
 
 state 7
 
-    (11) command -> return .
+    (8) command -> return .
 
-    $end            reduce using rule 11 (command -> return .)
+    $end            reduce using rule 8 (command -> return .)
 
 
 state 8
 
-    (16) command -> let . ID EQUALS expression
-    (17) command -> let . ID EQUALS command
+    (13) command -> let . ID EQUALS expression
+    (14) command -> let . ID EQUALS command
 
     ID              shift and go to state 28
 
@@ -249,16 +251,16 @@ state 9
 
 state 10
 
-    (18) command -> list . ID EQUALS LPAREN parlist RPAREN
+    (15) command -> list . ID EQUALS LPAREN parlist RPAREN
 
     ID              shift and go to state 30
 
 
 state 11
 
-    (12) command -> continue .
+    (9) command -> continue .
 
-    $end            reduce using rule 12 (command -> continue .)
+    $end            reduce using rule 9 (command -> continue .)
 
 
 state 12
@@ -269,8 +271,8 @@ state 12
 
 state 13
 
-    (14) command -> def . ID LPAREN RPAREN
-    (15) command -> def . ID LPAREN parlist RPAREN
+    (11) command -> def . ID LPAREN RPAREN
+    (12) command -> def . ID LPAREN parlist RPAREN
 
     ID              shift and go to state 31
 
@@ -369,7 +371,7 @@ state 17
 
 state 18
 
-    (13) command -> if relexpression . then
+    (10) command -> if relexpression . then
 
     then            shift and go to state 33
 
@@ -504,7 +506,7 @@ state 24
 
 state 25
 
-    (9) command -> foreach ID . in ID
+    (6) command -> foreach ID . in ID
 
     in              shift and go to state 48
 
@@ -535,8 +537,8 @@ state 27
 
 state 28
 
-    (16) command -> let ID . EQUALS expression
-    (17) command -> let ID . EQUALS command
+    (13) command -> let ID . EQUALS expression
+    (14) command -> let ID . EQUALS command
 
     EQUALS          shift and go to state 49
 
@@ -550,15 +552,15 @@ state 29
 
 state 30
 
-    (18) command -> list ID . EQUALS LPAREN parlist RPAREN
+    (15) command -> list ID . EQUALS LPAREN parlist RPAREN
 
     EQUALS          shift and go to state 51
 
 
 state 31
 
-    (14) command -> def ID . LPAREN RPAREN
-    (15) command -> def ID . LPAREN parlist RPAREN
+    (11) command -> def ID . LPAREN RPAREN
+    (12) command -> def ID . LPAREN parlist RPAREN
 
     LPAREN          shift and go to state 52
 
@@ -597,9 +599,9 @@ state 32
 
 state 33
 
-    (13) command -> if relexpression then .
+    (10) command -> if relexpression then .
 
-    $end            reduce using rule 13 (command -> if relexpression then .)
+    $end            reduce using rule 10 (command -> if relexpression then .)
 
 
 state 34
@@ -976,15 +978,15 @@ state 47
 
 state 48
 
-    (9) command -> foreach ID in . ID
+    (6) command -> foreach ID in . ID
 
     ID              shift and go to state 67
 
 
 state 49
 
-    (16) command -> let ID EQUALS . expression
-    (17) command -> let ID EQUALS . command
+    (13) command -> let ID EQUALS . expression
+    (14) command -> let ID EQUALS . command
     (19) expression -> . variable
     (20) expression -> . INTEGER
     (21) expression -> . FLOAT
@@ -1001,16 +1003,16 @@ state 49
     (3) command -> . print
     (4) command -> . print expression
     (5) command -> . search ID as sql
-    (9) command -> . foreach ID in ID
-    (10) command -> . end
-    (11) command -> . return
-    (12) command -> . continue
-    (13) command -> . if relexpression then
-    (14) command -> . def ID LPAREN RPAREN
-    (15) command -> . def ID LPAREN parlist RPAREN
-    (16) command -> . let ID EQUALS expression
-    (17) command -> . let ID EQUALS command
-    (18) command -> . list ID EQUALS LPAREN parlist RPAREN
+    (6) command -> . foreach ID in ID
+    (7) command -> . end
+    (8) command -> . return
+    (9) command -> . continue
+    (10) command -> . if relexpression then
+    (11) command -> . def ID LPAREN RPAREN
+    (12) command -> . def ID LPAREN parlist RPAREN
+    (13) command -> . let ID EQUALS expression
+    (14) command -> . let ID EQUALS command
+    (15) command -> . list ID EQUALS LPAREN parlist RPAREN
     (36) variable -> . ID
     (37) variable -> . ID LPAREN expression RPAREN
     (38) variable -> . DBID
@@ -1042,9 +1044,9 @@ state 49
 state 50
 
     (5) command -> search ID as . sql
-    (6) sql -> . SELECT
-    (7) sql -> . INSERT
-    (8) sql -> . UPDATE
+    (16) sql -> . SELECT
+    (17) sql -> . INSERT
+    (18) sql -> . UPDATE
 
     SELECT          shift and go to state 73
     INSERT          shift and go to state 70
@@ -1054,15 +1056,15 @@ state 50
 
 state 51
 
-    (18) command -> list ID EQUALS . LPAREN parlist RPAREN
+    (15) command -> list ID EQUALS . LPAREN parlist RPAREN
 
     LPAREN          shift and go to state 74
 
 
 state 52
 
-    (14) command -> def ID LPAREN . RPAREN
-    (15) command -> def ID LPAREN . parlist RPAREN
+    (11) command -> def ID LPAREN . RPAREN
+    (12) command -> def ID LPAREN . parlist RPAREN
     (39) parlist -> . parlist COMMA expression
     (40) parlist -> . expression
     (19) expression -> . variable
@@ -1402,28 +1404,28 @@ state 66
 
 state 67
 
-    (9) command -> foreach ID in ID .
+    (6) command -> foreach ID in ID .
 
-    $end            reduce using rule 9 (command -> foreach ID in ID .)
+    $end            reduce using rule 6 (command -> foreach ID in ID .)
 
 
 state 68
 
-    (17) command -> let ID EQUALS command .
+    (14) command -> let ID EQUALS command .
 
-    $end            reduce using rule 17 (command -> let ID EQUALS command .)
+    $end            reduce using rule 14 (command -> let ID EQUALS command .)
 
 
 state 69
 
-    (16) command -> let ID EQUALS expression .
+    (13) command -> let ID EQUALS expression .
     (25) expression -> expression . PLUS expression
     (26) expression -> expression . MINUS expression
     (27) expression -> expression . MULTIPLY expression
     (28) expression -> expression . DIVIDE expression
     (29) expression -> expression . POWER expression
 
-    $end            reduce using rule 16 (command -> let ID EQUALS expression .)
+    $end            reduce using rule 13 (command -> let ID EQUALS expression .)
     PLUS            shift and go to state 44
     MINUS           shift and go to state 46
     MULTIPLY        shift and go to state 45
@@ -1433,16 +1435,16 @@ state 69
 
 state 70
 
-    (7) sql -> INSERT .
+    (17) sql -> INSERT .
 
-    $end            reduce using rule 7 (sql -> INSERT .)
+    $end            reduce using rule 17 (sql -> INSERT .)
 
 
 state 71
 
-    (8) sql -> UPDATE .
+    (18) sql -> UPDATE .
 
-    $end            reduce using rule 8 (sql -> UPDATE .)
+    $end            reduce using rule 18 (sql -> UPDATE .)
 
 
 state 72
@@ -1454,14 +1456,14 @@ state 72
 
 state 73
 
-    (6) sql -> SELECT .
+    (16) sql -> SELECT .
 
-    $end            reduce using rule 6 (sql -> SELECT .)
+    $end            reduce using rule 16 (sql -> SELECT .)
 
 
 state 74
 
-    (18) command -> list ID EQUALS LPAREN . parlist RPAREN
+    (15) command -> list ID EQUALS LPAREN . parlist RPAREN
     (39) parlist -> . parlist COMMA expression
     (40) parlist -> . expression
     (19) expression -> . variable
@@ -1493,14 +1495,14 @@ state 74
 
 state 75
 
-    (14) command -> def ID LPAREN RPAREN .
+    (11) command -> def ID LPAREN RPAREN .
 
-    $end            reduce using rule 14 (command -> def ID LPAREN RPAREN .)
+    $end            reduce using rule 11 (command -> def ID LPAREN RPAREN .)
 
 
 state 76
 
-    (15) command -> def ID LPAREN parlist . RPAREN
+    (12) command -> def ID LPAREN parlist . RPAREN
     (39) parlist -> parlist . COMMA expression
 
     RPAREN          shift and go to state 80
@@ -1548,7 +1550,7 @@ state 78
 
 state 79
 
-    (18) command -> list ID EQUALS LPAREN parlist . RPAREN
+    (15) command -> list ID EQUALS LPAREN parlist . RPAREN
     (39) parlist -> parlist . COMMA expression
 
     RPAREN          shift and go to state 82
@@ -1557,9 +1559,9 @@ state 79
 
 state 80
 
-    (15) command -> def ID LPAREN parlist RPAREN .
+    (12) command -> def ID LPAREN parlist RPAREN .
 
-    $end            reduce using rule 15 (command -> def ID LPAREN parlist RPAREN .)
+    $end            reduce using rule 12 (command -> def ID LPAREN parlist RPAREN .)
 
 
 state 81
@@ -1593,9 +1595,9 @@ state 81
 
 state 82
 
-    (18) command -> list ID EQUALS LPAREN parlist RPAREN .
+    (15) command -> list ID EQUALS LPAREN parlist RPAREN .
 
-    $end            reduce using rule 18 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    $end            reduce using rule 15 (command -> list ID EQUALS LPAREN parlist RPAREN .)
 
 
 state 83

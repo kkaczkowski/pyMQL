@@ -1,8 +1,8 @@
 
 import lang.mqllex as mqllex
 import yacc.yacc as yacc
+from lang.mqllex import tokens
 
-tokens = mqllex.tokens
 
 
 precedence = (
@@ -11,7 +11,7 @@ precedence = (
    ('left', 'POWER'),
    ('right','UMINUS')
 )
-   
+
 
 def p_command_include(p):
 	'''command : include STRING'''
@@ -37,16 +37,6 @@ def p_command_search(p):
 	'''command : search ID as sql'''
 	p[0] = ('search', p[2], p[4])
 
-
-def p_sql(p):
-    '''sql : SELECT 
-           | INSERT
-           | UPDATE'''
-    if len(p)  == 2:
-         p[0] = p[1]
-    else:
-		
-         p[0] = None
 
 def p_command_foreach(p):
 	'''command : foreach ID in ID'''
@@ -96,10 +86,17 @@ def p_command_let_command(p):
 def p_command_list(p):
     '''command : list ID EQUALS LPAREN parlist RPAREN'''
     p[0] = ('list', p[5])
-    
 
 
-
+def p_sql(p):
+    '''sql : SELECT 
+           | INSERT
+           | UPDATE'''
+    if len(p)  == 2:
+         p[0] = p[1]
+    else:
+         p[0] = None
+         
 ##########################################  
 #### Arithmetic expressions
 ##########################################
@@ -184,16 +181,25 @@ def p_parlist(p):
        p[0] = [p[1]]
 
 
+def p_empty(p):
+    '''empty :'''
+
+
 # Error rule for syntax errors
 def p_error(p):
-    print('Syntax error in input! Line : %s' %p.lexer.lineno)
-    print('>>> %s' %p.lexer.lexdata.split('\n')[p.lexer.lineno - 1])
+    if hasattr(p, 'lexer'):
+        numline = len(p.lexer.lexdata[0:p.lexer.lexpos].split('\n'))
+        print('Syntax error in input! Line : %s' % numline)
+        print('>>> %s' %p.lexer.lexdata.split('\n')[numline - 1])
+
+
+def parse(data, debug=False, tracking=False):
+    mqlparser.error = 0
+    p = mqlparser.parse(data, debug=debug, tracking=tracking)
+    if mqlparser.error: return None
+    return p
 
 
 mqlparser = yacc.yacc()
 
-def parse(data, debug=0):
-    mqlparser.error = 0
-    p = mqlparser.parse(data,debug=debug)
-    if mqlparser.error: return None
-    return p
+

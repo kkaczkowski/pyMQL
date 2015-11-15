@@ -44,7 +44,7 @@ tokens = keywords + (
    'UPDATE'
 )
 
-t_ignore = ' \t'
+t_ignore = ' \t\x0c'
 
 t_EQUALS     = r'='
 t_PLUS       = r'\+'
@@ -102,7 +102,17 @@ def t_NEWLINE(t):
     t.lexer.lineno += 1
 
 
-lex.lex(debug=0)
+lex.lex(debug=False)
 lexer = lex.lex()
 
 	
+def test_lex(data):
+    lexer.input(data)
+    
+    # Tokenize
+    while True:
+        tok = lexer.token()
+        if not tok: 
+            break      # No more input
+        print(tok)
+    
