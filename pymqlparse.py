@@ -49,9 +49,9 @@ def p_sql(p):
 		
          p[0] = None
 
-def p_command_each(p):
-	'''command : each ID as ID'''
-	p[0] = ('each', p[2], p[4])
+def p_command_foreach(p):
+	'''command : foreach ID in ID'''
+	p[0] = ('foreach', p[2], p[4])
 	
 
 def p_command_end(p):
@@ -157,7 +157,6 @@ def p_relexpression(p):
 def p_variable(p):
     '''variable : ID
                 | ID LPAREN expression RPAREN
-                | ID LPAREN expression COMMA expression RPAREN
                 | DBID
                 '''
     if len(p) == 2:
