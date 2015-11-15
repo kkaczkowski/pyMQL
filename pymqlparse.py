@@ -85,14 +85,23 @@ def p_command_def(p):
 
 
 def p_command_let(p):
-	'''command : let ID EQUALS expression'''
+	'''command : let ID EQUALS expression
+    '''
 	p[0] = ('let', p[2], p[4])
     
     
 def p_command_let_command(p):
 	'''command : let ID EQUALS command'''
 	p[0] = ('let', p[2], p[4])
-  
+
+
+def p_command_list(p):
+    '''command : list ID EQUALS LPAREN parlist RPAREN'''
+    p[0] = ('list', p[5])
+    
+
+
+
 ##########################################  
 #### Arithmetic expressions
 ##########################################
@@ -168,13 +177,15 @@ def p_variable(p):
 
 
 def p_parlist(p):
-    '''parlist : parlist COMMA ID
-               | ID'''
+    '''parlist : parlist COMMA expression
+               | expression'''
     if len(p) > 2:
        p[0] = p[1]
        p[0].append(p[3])
     else:
        p[0] = [p[1]]
+       
+       
        
 
 
