@@ -1,8 +1,8 @@
 
-import ply.yacc as yacc
-import pymqllex
+import lang.mqllex as mqllex
+import yacc.yacc as yacc
 
-tokens = pymqllex.tokens
+tokens = mqllex.tokens
 
 
 precedence = (
@@ -184,23 +184,17 @@ def p_parlist(p):
        p[0].append(p[3])
     else:
        p[0] = [p[1]]
-       
-       
-       
 
 
 # Error rule for syntax errors
 def p_error(p):
     print("Syntax error in input!")
 
-# Build the parser
-parser = yacc.yacc()
 
-while True:
-   try:
-       s = input('draco > ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print(result)
+mqlparser = yacc.yacc()
+
+def parse(data, debug=0):
+    mqlparser.error = 0
+    p = mqlparser.parse(data,debug=debug)
+    if mqlparser.error: return None
+    return p
