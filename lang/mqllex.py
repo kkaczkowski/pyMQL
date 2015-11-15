@@ -2,7 +2,21 @@
 import yacc.lex as lex
 
 
-keywords = ('print', 'as', 'in', 'search', 'foreach', 'end', 'return', 'continue', 'if', 'then', 'def', 'include', 'outcsv', 'let', 'list')
+keywords = ('print', 
+    'as', 
+    'in', 
+    'search', 
+    'foreach', 
+    'end', 
+    'return', 
+    'continue', 
+    'if', 
+    'then', 
+    'def', 
+    'include', 
+    'outcsv', 
+    'let', 
+    'list')
 
 
 tokens = keywords + (
