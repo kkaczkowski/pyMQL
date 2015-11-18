@@ -13,6 +13,27 @@ precedence = (
 )
 
 
+def p_program(p):
+    '''program : program command
+               | command
+               | expression'''
+    if len(p) == 2:
+        if not p[0]: p[0] = []
+        p[0].append(p[1])
+    elif len(p) == 3:
+        p[0] = p[1]
+        if not p[0]: p[0] = []
+        if p[2]:
+            p[0].append(p[2])
+    
+
+def p_program_error(p):
+    '''program : error'''
+    print('Program error: %s' %p[1])
+    p[0] = None
+    p.parser.error = 1
+
+
 def p_command_include(p):
 	'''command : include STRING'''
 	p[0] = ('include', p[2])
@@ -25,7 +46,7 @@ def p_command_outcsv(p):
 	
 def p_command_print_empty(p):
 	'''command : print optend'''
-	p[0] = ('print')
+	p[0] = ('print', None)
 
 		
 def p_command_print_expression(p):
@@ -50,7 +71,12 @@ def p_command_end(p):
 
 def p_command_return(p):
     '''command : return'''
-    p[0] = ('return',)
+    p[0] = ('return', None)
+    
+
+def p_command_return_expr(p):
+    '''command : return expression'''
+    p[0] = ('return', p[2])
     
 
 def p_command_continue(p):

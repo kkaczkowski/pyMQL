@@ -1,0 +1,1 @@
+search persons as SELECT name, age, '' as empty FROM person;

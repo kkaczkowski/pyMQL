@@ -42,7 +42,8 @@ tokens = keywords + (
    'STRING',
    'SELECT',
    'INSERT',
-   'UPDATE'
+   'UPDATE',
+   'NEWLINE'
 )
 
 t_ignore = ' \t\x0c'
