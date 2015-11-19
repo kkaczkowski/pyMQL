@@ -1,84 +1,42 @@
-RESERWED KEYWORDS: search, if, then, end, each, output, import, in, clean, count, first, last, random, about, print, column, def, invalidate
-column - zwaraca listê wartoœci z tabeli dla danej kolumny
-min, max, average - zwraca dla kolumy z tablicy rz¹dan¹ wartoœæ po agregacji
-tranasaction, commit, rollback, insert, update
-
-output outcsv as csv in "c:/temp/result.txt"
-connect to oracle as myOracle with "host:;user:;password:;"
-focus to myOracle
-
-include test1
-
-search persons as SELECT name, age, '' as empty FROM person;
-search persons where name = last_person@name;
-search persons where add or name = last_person@name groupby age;
-search persons groupby age;
-search persons having sum(age) > 10;
-search persons where clean
-search persons as SELECT age FROM person 
-                  WHERE age > 10 
-                  GROUP BY age 
-                  HAVING sum(age) > 10; 
+# connection definition with oracle
+connect oracle = Oracle("")
+outcsv mycsv in "data\test1.csv"
 
 
-first_person   = first persons
-last_person    = last   from persons
-random_person  = random from persons
-number_records = count of persons
+# Search persons from database
+search persons with oracle as SELECT age FROM person
+                              WHERE age > 10
+                              GROUP BY age
+                              HAVING sum(age) > 10;
 
+search persons2 with oracle as 
+   SELECT age FROM person
+   WHERE age > 10
+   GROUP BY age
+   HAVING sum(age) > 10;
+   
+let firstperson = first(persons)
 
-infotype = (34, 56, 21, 45)
-randominfotype = random from infotype
-if randominfotype = 36 then
-   search myquery as SELECT name, wiek, @randominfotype as infotype, nazwisko FROM wi_infotype;
-end
-if randominfotype = 56 then
-   search myquery as SELECT name, wiek, @randominfotype+10 as infotype, nazwisko FROM wi_infotype;
+import "test1.mql"
+
+def concat_name(first_name, last_name)
+   return first_name + last_name
 end
 
-switch randominfotype as type
-    case 34
-         search myquery as SELECT name, wiek, @randominfotype as infotype, nazwisko FROM wi_infotype;
-    end
-end
+let firstperson = first(persons)
+let rndperson   = random(persons, 10)
 
-if count of persons < 10 then
-   foreach person in persons
-     if person@age < 10 then
-        person@age = 20
-        outcsv person
-     end
-     log person
+foreach person in persons
+   if person@name = "Kowalski" then
+      print person@name
+      list csvrecord = (person@firstname, person@age, concat_name(person@firstName, person@lastName, person@last_name)) 
+      save csvrecord in mycsv
+      save (person@firstname, person@age, person@last_name) in mycsv
+   else
+      print "No"
    end
 end
 
-if ('kow%' 'dor%' 'and%') in last_person@name then
-end
-
-
-if last_person@name in ('kowalski' 'barkabara' 'dorota') then
-   search persons where add or name = last_person@name
-   log first persons
-   outcsv first persons
-   about persons
-end
-
-column persons@name as names
-each names as name
-   print name
-end
-
-print 'end script'
-
-def pesel(s)
-   replace 'aaa' in s to 'aaa'
-end
-
-list = (1 2 3 4 5)
-each list as item
-   print item
-end
-
-each 1..100 as num
-   print num
+foreach pos, person in persons
+   print pos, person@name
 end

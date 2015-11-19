@@ -16,7 +16,7 @@ precedence = (
 def p_program(p):
     '''program : program command
                | command
-               | expression'''
+               | variable'''
     if len(p) == 2:
         if not p[0]: p[0] = []
         p[0].append(p[1])
@@ -34,16 +34,26 @@ def p_program_error(p):
     p.parser.error = 1
 
 
-def p_command_include(p):
-	'''command : include STRING'''
-	p[0] = ('include', p[2])
+def p_command_import(p):
+	'''command : import STRING'''
+	p[0] = ('import', p[2])
 	
 	
 def p_command_outcsv(p):
 	'''command : outcsv ID in STRING'''
 	p[0] = ('outcsv', p[2], p[4])
 
-	
+
+def p_command_save(p):
+    '''command : save ID in ID'''
+    p[0] = ('save', p[2], p[4])
+    
+    
+def p_command_save_list(p):
+    '''command : save LPAREN parlist RPAREN in ID'''
+    p[0] = ('save', p[3], p[6])
+  
+
 def p_command_print_empty(p):
 	'''command : print optend'''
 	p[0] = ('print', None)
@@ -52,17 +62,26 @@ def p_command_print_empty(p):
 def p_command_print_expression(p):
 	'''command : print expression'''
 	p[0] = ('print', p[2])
+    
+    
+def p_command_print_list(p):
+    '''command : print parlist'''
+    p[0] = ('print', p[2])
 
 
 def p_command_search(p):
-	'''command : search ID as sql'''
-	p[0] = ('search', p[2], p[4])
+	'''command : search ID with ID as sql'''
+	p[0] = ('search', p[2], p[4], p[6])
 
 
 def p_command_foreach(p):
 	'''command : foreach ID in ID'''
 	p[0] = ('foreach', p[2], p[4])
 	
+
+def p_command_foreach_enum(p):
+    '''command : foreach ID COMMA ID in ID'''
+    p[0] = ('foreach', p[2], p[4], p[6])
 
 def p_command_end(p):
     '''command : end'''
@@ -88,6 +107,11 @@ def p_command_if(p):
     '''command : if relexpression then'''
     p[0] = ('if',p[2])
     
+    
+def p_command_else(p):
+    '''command : else'''
+    p[0] = ('else',)
+    
 
 def p_command_def_empty(p):
 	'''command : def ID LPAREN RPAREN'''
@@ -97,6 +121,10 @@ def p_command_def_empty(p):
 def p_command_def(p):
 	'''command : def ID LPAREN parlist RPAREN'''
 	p[0] = ('DEF', p[2], p[4])
+
+def p_command_connect(p):
+    '''command : connect ID EQUALS DBPROVIDER LPAREN STRING RPAREN'''
+    p[0] = ('connect', p[2], p[4], p[6])
 
 
 def p_command_let(p):
@@ -117,6 +145,10 @@ def p_command_let_command_error(p):
 def p_command_list(p):
     '''command : list ID EQUALS LPAREN parlist RPAREN'''
     p[0] = ('list', p[5])
+
+def p_command_function(p):
+    '''command : ID LPAREN parlist RPAREN'''
+    p[0] = ('FUN', p[1], p[3])
 
 
 def p_sql(p):
@@ -191,7 +223,7 @@ def p_relexpression(p):
 
 def p_variable(p):
     '''variable : ID
-                | ID LPAREN expression RPAREN
+                | ID LPAREN parlist RPAREN
                 | DBID
                 '''
     if len(p) == 2:

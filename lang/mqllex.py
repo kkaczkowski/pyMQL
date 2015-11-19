@@ -6,17 +6,21 @@ keywords = ('print',
     'as', 
     'in', 
     'search', 
+    'with',
     'foreach', 
     'end', 
     'return', 
     'continue', 
     'if', 
-    'then', 
-    'def', 
-    'include', 
+    'then',
+    'else', 
+    'def',  
     'outcsv', 
     'let', 
-    'list')
+    'list',
+    'import',
+    'connect',
+    'save')
 
 
 tokens = keywords + (
@@ -42,7 +46,8 @@ tokens = keywords + (
    'STRING',
    'SELECT',
    'INSERT',
-   'UPDATE'
+   'UPDATE',
+   'DBPROVIDER'
 )
 
 t_ignore = ' \t\x0c'
@@ -67,6 +72,7 @@ t_INSERT     = r'INSERT .*?(.|\n)*?;'
 t_UPDATE     = r'UPDATE .*?(.|\n)*?;'
 t_STRING     = r'\".*?\"'
 t_FLOAT      = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))'
+t_DBPROVIDER = r'Oracle|PostgreSQL'
 
 
 def t_error(t):
@@ -75,7 +81,7 @@ def t_error(t):
 
 
 def t_DBID(t):
-    r'[a-z]*@[a-z]*'
+    r'[aA-zZ]*@[aA-zZ]*'
     if t.value in keywords:
         t.type = t.value
     return t
