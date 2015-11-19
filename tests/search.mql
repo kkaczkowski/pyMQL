@@ -1,1 +1,13 @@
-search persons as SELECT name, age, '' as empty FROM person;
+search persons1 with oracle as SELECT name, age, '' as empty FROM person;
+
+search persons2 with oracle as SELECT age FROM person
+   WHERE age > 10
+   GROUP BY age
+   HAVING sum(age) > 10;
+
+search persons3 with oracle as 
+   SELECT age FROM person
+   WHERE age > 10
+   GROUP BY age
+   HAVING sum(age) > 10;
+

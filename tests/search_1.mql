@@ -1,4 +1,0 @@
-search persons as SELECT age FROM person 
-                  WHERE age > 10 
-                  GROUP BY age 
-                  HAVING sum(age) > 10;

@@ -15,8 +15,8 @@ precedence = (
 
 def p_program(p):
     '''program : program command
-               | command
-               | variable'''
+               | command'''
+               
     if len(p) == 2:
         if not p[0]: p[0] = []
         p[0].append(p[1])
@@ -57,11 +57,6 @@ def p_command_save_list(p):
 def p_command_print_empty(p):
 	'''command : print optend'''
 	p[0] = ('print', None)
-
-		
-def p_command_print_expression(p):
-	'''command : print expression'''
-	p[0] = ('print', p[2])
     
     
 def p_command_print_list(p):
@@ -144,7 +139,8 @@ def p_command_let_command_error(p):
 
 def p_command_list(p):
     '''command : list ID EQUALS LPAREN parlist RPAREN'''
-    p[0] = ('list', p[5])
+    p[0] = ('list', p[2], p[5])
+
 
 def p_command_function(p):
     '''command : ID LPAREN parlist RPAREN'''
@@ -220,6 +216,11 @@ def p_relexpression(p):
 ########################################## 
 #### Variables
 ########################################## 
+
+def p_function(p):
+    '''function : ID LPAREN parlist RPAREN'''
+    p[0] = (p[1], p[3])
+
 
 def p_variable(p):
     '''variable : ID
