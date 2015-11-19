@@ -15,8 +15,8 @@ precedence = (
 
 def p_program(p):
     '''program : program command
-               | command'''
-               
+               | command
+    '''
     if len(p) == 2:
         if not p[0]: p[0] = []
         p[0].append(p[1])
@@ -25,6 +25,21 @@ def p_program(p):
         if not p[0]: p[0] = []
         if p[2]:
             p[0].append(p[2])
+            
+            
+def p_program_function(p):
+    '''program : program function
+               | function
+    '''
+    if len(p) == 2:
+        if not p[0]: p[0] = []
+        p[0].append(p[1])
+    elif len(p) == 3:
+        p[0] = p[1]
+        if not p[0]: p[0] = []
+        if p[2]:
+            p[0].append(p[2])
+            
     
 
 def p_program_error(p):
@@ -140,11 +155,10 @@ def p_command_let_command_error(p):
 def p_command_list(p):
     '''command : list ID EQUALS LPAREN parlist RPAREN'''
     p[0] = ('list', p[2], p[5])
+    
+    
 
 
-def p_command_function(p):
-    '''command : ID LPAREN parlist RPAREN'''
-    p[0] = ('FUN', p[1], p[3])
 
 
 def p_sql(p):
@@ -163,6 +177,11 @@ def p_sql(p):
 def p_expression_variable(p):
     '''expression : variable'''
     p[0] = ('VAR',p[1])
+    
+    
+def p_expression_function(p):
+    '''expression : function'''
+    p[0] = ('FUN',p[1])
 
 
 def p_expression_number(p):
@@ -214,7 +233,7 @@ def p_relexpression(p):
 
 
 ########################################## 
-#### Variables
+#### Functions
 ########################################## 
 
 def p_function(p):
@@ -222,9 +241,13 @@ def p_function(p):
     p[0] = (p[1], p[3])
 
 
+########################################## 
+#### Variables
+########################################## 
+
+
 def p_variable(p):
     '''variable : ID
-                | ID LPAREN parlist RPAREN
                 | DBID
                 '''
     if len(p) == 2:
