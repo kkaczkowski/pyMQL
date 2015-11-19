@@ -2,1618 +2,2299 @@ Created by PLY version 3.8 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> command
-Rule 1     command -> include STRING
-Rule 2     command -> outcsv ID in STRING
-Rule 3     command -> print
-Rule 4     command -> print expression
-Rule 5     command -> search ID as sql
-Rule 6     command -> foreach ID in ID
-Rule 7     command -> end
-Rule 8     command -> return
-Rule 9     command -> continue
-Rule 10    command -> if relexpression then
-Rule 11    command -> def ID LPAREN RPAREN
-Rule 12    command -> def ID LPAREN parlist RPAREN
-Rule 13    command -> let ID EQUALS expression
-Rule 14    command -> let ID EQUALS command
-Rule 15    command -> list ID EQUALS LPAREN parlist RPAREN
-Rule 16    sql -> SELECT
-Rule 17    sql -> INSERT
-Rule 18    sql -> UPDATE
-Rule 19    expression -> variable
-Rule 20    expression -> INTEGER
-Rule 21    expression -> FLOAT
-Rule 22    expression -> STRING
-Rule 23    expression -> MINUS expression
-Rule 24    expression -> LPAREN expression RPAREN
-Rule 25    expression -> expression PLUS expression
-Rule 26    expression -> expression MINUS expression
-Rule 27    expression -> expression MULTIPLY expression
-Rule 28    expression -> expression DIVIDE expression
-Rule 29    expression -> expression POWER expression
-Rule 30    relexpression -> expression LT expression
-Rule 31    relexpression -> expression LE expression
-Rule 32    relexpression -> expression GT expression
-Rule 33    relexpression -> expression GE expression
-Rule 34    relexpression -> expression EQUALS expression
-Rule 35    relexpression -> expression NE expression
-Rule 36    variable -> ID
-Rule 37    variable -> ID LPAREN expression RPAREN
-Rule 38    variable -> DBID
-Rule 39    parlist -> parlist COMMA expression
-Rule 40    parlist -> expression
-Rule 41    empty -> <empty>
+Rule 0     S' -> program
+Rule 1     program -> program command
+Rule 2     program -> command
+Rule 3     program -> expression
+Rule 4     program -> error
+Rule 5     command -> include STRING
+Rule 6     command -> outcsv ID in STRING
+Rule 7     command -> print optend
+Rule 8     command -> print expression
+Rule 9     command -> search ID as sql
+Rule 10    command -> foreach ID in ID
+Rule 11    command -> end
+Rule 12    command -> return
+Rule 13    command -> return expression
+Rule 14    command -> continue
+Rule 15    command -> if relexpression then
+Rule 16    command -> def ID LPAREN RPAREN
+Rule 17    command -> def ID LPAREN parlist RPAREN
+Rule 18    command -> let ID EQUALS expression
+Rule 19    command -> let ID EQUALS command
+Rule 20    command -> let error
+Rule 21    command -> list ID EQUALS LPAREN parlist RPAREN
+Rule 22    sql -> SELECT
+Rule 23    sql -> INSERT
+Rule 24    sql -> UPDATE
+Rule 25    expression -> variable
+Rule 26    expression -> INTEGER
+Rule 27    expression -> FLOAT
+Rule 28    expression -> STRING
+Rule 29    expression -> MINUS expression
+Rule 30    expression -> LPAREN expression RPAREN
+Rule 31    expression -> expression PLUS expression
+Rule 32    expression -> expression MINUS expression
+Rule 33    expression -> expression MULTIPLY expression
+Rule 34    expression -> expression DIVIDE expression
+Rule 35    expression -> expression POWER expression
+Rule 36    relexpression -> expression LT expression
+Rule 37    relexpression -> expression LE expression
+Rule 38    relexpression -> expression GT expression
+Rule 39    relexpression -> expression GE expression
+Rule 40    relexpression -> expression EQUALS expression
+Rule 41    relexpression -> expression NE expression
+Rule 42    variable -> ID
+Rule 43    variable -> ID LPAREN expression RPAREN
+Rule 44    variable -> DBID
+Rule 45    parlist -> parlist COMMA expression
+Rule 46    parlist -> expression
+Rule 47    optend -> COMMA
+Rule 48    optend -> SEMI
+Rule 49    optend -> <empty>
 
 Terminals, with rules where they appear
 
-COMMA                : 39
-DBID                 : 38
-DIVIDE               : 28
-EQUALS               : 13 14 15 34
-FLOAT                : 21
-GE                   : 33
-GT                   : 32
-ID                   : 2 5 6 6 11 12 13 14 15 36 37
-INSERT               : 17
-INTEGER              : 20
-LE                   : 31
-LPAREN               : 11 12 15 24 37
-LT                   : 30
-MINUS                : 23 26
-MULTIPLY             : 27
-NE                   : 35
-PLUS                 : 25
-POWER                : 29
-RPAREN               : 11 12 15 24 37
-SELECT               : 16
-STRING               : 1 2 22
-UPDATE               : 18
-as                   : 5
-continue             : 9
-def                  : 11 12
-end                  : 7
-error                : 
-foreach              : 6
-if                   : 10
-in                   : 2 6
-include              : 1
-let                  : 13 14
-list                 : 15
-outcsv               : 2
-print                : 3 4
-return               : 8
-search               : 5
-then                 : 10
+COMMA                : 45 47
+DBID                 : 44
+DIVIDE               : 34
+EQUALS               : 18 19 21 40
+FLOAT                : 27
+GE                   : 39
+GT                   : 38
+ID                   : 6 9 10 10 16 17 18 19 21 42 43
+INSERT               : 23
+INTEGER              : 26
+LE                   : 37
+LPAREN               : 16 17 21 30 43
+LT                   : 36
+MINUS                : 29 32
+MULTIPLY             : 33
+NE                   : 41
+PLUS                 : 31
+POWER                : 35
+RPAREN               : 16 17 21 30 43
+SELECT               : 22
+SEMI                 : 48
+STRING               : 5 6 28
+UPDATE               : 24
+as                   : 9
+continue             : 14
+def                  : 16 17
+end                  : 11
+error                : 4 20
+foreach              : 10
+if                   : 15
+in                   : 6 10
+include              : 5
+let                  : 18 19 20
+list                 : 21
+outcsv               : 6
+print                : 7 8
+return               : 12 13
+search               : 9
+then                 : 15
 
 Nonterminals, with rules where they appear
 
-command              : 14 0
-empty                : 
-expression           : 4 13 23 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 37 39 40
-parlist              : 12 15 39
-relexpression        : 10
-sql                  : 5
-variable             : 19
+command              : 1 2 19
+expression           : 3 8 13 18 29 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 43 45 46
+optend               : 7
+parlist              : 17 21 45
+program              : 1 0
+relexpression        : 15
+sql                  : 9
+variable             : 25
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . command
-    (1) command -> . include STRING
-    (2) command -> . outcsv ID in STRING
-    (3) command -> . print
-    (4) command -> . print expression
-    (5) command -> . search ID as sql
-    (6) command -> . foreach ID in ID
-    (7) command -> . end
-    (8) command -> . return
-    (9) command -> . continue
-    (10) command -> . if relexpression then
-    (11) command -> . def ID LPAREN RPAREN
-    (12) command -> . def ID LPAREN parlist RPAREN
-    (13) command -> . let ID EQUALS expression
-    (14) command -> . let ID EQUALS command
-    (15) command -> . list ID EQUALS LPAREN parlist RPAREN
+    (0) S' -> . program
+    (1) program -> . program command
+    (2) program -> . command
+    (3) program -> . expression
+    (4) program -> . error
+    (5) command -> . include STRING
+    (6) command -> . outcsv ID in STRING
+    (7) command -> . print optend
+    (8) command -> . print expression
+    (9) command -> . search ID as sql
+    (10) command -> . foreach ID in ID
+    (11) command -> . end
+    (12) command -> . return
+    (13) command -> . return expression
+    (14) command -> . continue
+    (15) command -> . if relexpression then
+    (16) command -> . def ID LPAREN RPAREN
+    (17) command -> . def ID LPAREN parlist RPAREN
+    (18) command -> . let ID EQUALS expression
+    (19) command -> . let ID EQUALS command
+    (20) command -> . let error
+    (21) command -> . list ID EQUALS LPAREN parlist RPAREN
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    include         shift and go to state 6
-    outcsv          shift and go to state 3
-    print           shift and go to state 5
-    search          shift and go to state 9
-    foreach         shift and go to state 4
-    end             shift and go to state 2
-    return          shift and go to state 7
-    continue        shift and go to state 11
-    if              shift and go to state 1
-    def             shift and go to state 13
-    let             shift and go to state 8
-    list            shift and go to state 10
+    error           shift and go to state 22
+    include         shift and go to state 10
+    outcsv          shift and go to state 5
+    print           shift and go to state 8
+    search          shift and go to state 17
+    foreach         shift and go to state 7
+    end             shift and go to state 3
+    return          shift and go to state 11
+    continue        shift and go to state 20
+    if              shift and go to state 2
+    def             shift and go to state 24
+    let             shift and go to state 13
+    list            shift and go to state 19
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    command                        shift and go to state 12
+    program                        shift and go to state 6
+    command                        shift and go to state 21
+    variable                       shift and go to state 15
+    expression                     shift and go to state 23
 
 state 1
 
-    (10) command -> if . relexpression then
-    (30) relexpression -> . expression LT expression
-    (31) relexpression -> . expression LE expression
-    (32) relexpression -> . expression GT expression
-    (33) relexpression -> . expression GE expression
-    (34) relexpression -> . expression EQUALS expression
-    (35) relexpression -> . expression NE expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (29) expression -> MINUS . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 23
-    relexpression                  shift and go to state 18
+    variable                       shift and go to state 15
+    expression                     shift and go to state 25
 
 state 2
 
-    (7) command -> end .
+    (15) command -> if . relexpression then
+    (36) relexpression -> . expression LT expression
+    (37) relexpression -> . expression LE expression
+    (38) relexpression -> . expression GT expression
+    (39) relexpression -> . expression GE expression
+    (40) relexpression -> . expression EQUALS expression
+    (41) relexpression -> . expression NE expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    $end            reduce using rule 7 (command -> end .)
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 27
+    relexpression                  shift and go to state 26
 
 state 3
 
-    (2) command -> outcsv . ID in STRING
+    (11) command -> end .
 
-    ID              shift and go to state 24
+    include         reduce using rule 11 (command -> end .)
+    outcsv          reduce using rule 11 (command -> end .)
+    print           reduce using rule 11 (command -> end .)
+    search          reduce using rule 11 (command -> end .)
+    foreach         reduce using rule 11 (command -> end .)
+    end             reduce using rule 11 (command -> end .)
+    return          reduce using rule 11 (command -> end .)
+    continue        reduce using rule 11 (command -> end .)
+    if              reduce using rule 11 (command -> end .)
+    def             reduce using rule 11 (command -> end .)
+    let             reduce using rule 11 (command -> end .)
+    list            reduce using rule 11 (command -> end .)
+    $end            reduce using rule 11 (command -> end .)
 
 
 state 4
 
-    (6) command -> foreach . ID in ID
+    (44) variable -> DBID .
 
-    ID              shift and go to state 25
+    PLUS            reduce using rule 44 (variable -> DBID .)
+    MINUS           reduce using rule 44 (variable -> DBID .)
+    MULTIPLY        reduce using rule 44 (variable -> DBID .)
+    DIVIDE          reduce using rule 44 (variable -> DBID .)
+    POWER           reduce using rule 44 (variable -> DBID .)
+    RPAREN          reduce using rule 44 (variable -> DBID .)
+    COMMA           reduce using rule 44 (variable -> DBID .)
+    include         reduce using rule 44 (variable -> DBID .)
+    outcsv          reduce using rule 44 (variable -> DBID .)
+    print           reduce using rule 44 (variable -> DBID .)
+    search          reduce using rule 44 (variable -> DBID .)
+    foreach         reduce using rule 44 (variable -> DBID .)
+    end             reduce using rule 44 (variable -> DBID .)
+    return          reduce using rule 44 (variable -> DBID .)
+    continue        reduce using rule 44 (variable -> DBID .)
+    if              reduce using rule 44 (variable -> DBID .)
+    def             reduce using rule 44 (variable -> DBID .)
+    let             reduce using rule 44 (variable -> DBID .)
+    list            reduce using rule 44 (variable -> DBID .)
+    $end            reduce using rule 44 (variable -> DBID .)
+    LT              reduce using rule 44 (variable -> DBID .)
+    LE              reduce using rule 44 (variable -> DBID .)
+    GT              reduce using rule 44 (variable -> DBID .)
+    GE              reduce using rule 44 (variable -> DBID .)
+    EQUALS          reduce using rule 44 (variable -> DBID .)
+    NE              reduce using rule 44 (variable -> DBID .)
+    then            reduce using rule 44 (variable -> DBID .)
 
 
 state 5
 
-    (3) command -> print .
-    (4) command -> print . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
-
-    $end            reduce using rule 3 (command -> print .)
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
-
-    variable                       shift and go to state 20
-    expression                     shift and go to state 26
-
-state 6
-
-    (1) command -> include . STRING
-
-    STRING          shift and go to state 27
-
-
-state 7
-
-    (8) command -> return .
-
-    $end            reduce using rule 8 (command -> return .)
-
-
-state 8
-
-    (13) command -> let . ID EQUALS expression
-    (14) command -> let . ID EQUALS command
+    (6) command -> outcsv . ID in STRING
 
     ID              shift and go to state 28
 
 
-state 9
+state 6
 
-    (5) command -> search . ID as sql
+    (0) S' -> program .
+    (1) program -> program . command
+    (5) command -> . include STRING
+    (6) command -> . outcsv ID in STRING
+    (7) command -> . print optend
+    (8) command -> . print expression
+    (9) command -> . search ID as sql
+    (10) command -> . foreach ID in ID
+    (11) command -> . end
+    (12) command -> . return
+    (13) command -> . return expression
+    (14) command -> . continue
+    (15) command -> . if relexpression then
+    (16) command -> . def ID LPAREN RPAREN
+    (17) command -> . def ID LPAREN parlist RPAREN
+    (18) command -> . let ID EQUALS expression
+    (19) command -> . let ID EQUALS command
+    (20) command -> . let error
+    (21) command -> . list ID EQUALS LPAREN parlist RPAREN
 
-    ID              shift and go to state 29
+    include         shift and go to state 10
+    outcsv          shift and go to state 5
+    print           shift and go to state 8
+    search          shift and go to state 17
+    foreach         shift and go to state 7
+    end             shift and go to state 3
+    return          shift and go to state 11
+    continue        shift and go to state 20
+    if              shift and go to state 2
+    def             shift and go to state 24
+    let             shift and go to state 13
+    list            shift and go to state 19
 
+    command                        shift and go to state 29
 
-state 10
+state 7
 
-    (15) command -> list . ID EQUALS LPAREN parlist RPAREN
+    (10) command -> foreach . ID in ID
 
     ID              shift and go to state 30
 
 
+state 8
+
+    (7) command -> print . optend
+    (8) command -> print . expression
+    (47) optend -> . COMMA
+    (48) optend -> . SEMI
+    (49) optend -> .
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
+
+    COMMA           shift and go to state 33
+    SEMI            shift and go to state 31
+    include         reduce using rule 49 (optend -> .)
+    outcsv          reduce using rule 49 (optend -> .)
+    print           reduce using rule 49 (optend -> .)
+    search          reduce using rule 49 (optend -> .)
+    foreach         reduce using rule 49 (optend -> .)
+    end             reduce using rule 49 (optend -> .)
+    return          reduce using rule 49 (optend -> .)
+    continue        reduce using rule 49 (optend -> .)
+    if              reduce using rule 49 (optend -> .)
+    def             reduce using rule 49 (optend -> .)
+    let             reduce using rule 49 (optend -> .)
+    list            reduce using rule 49 (optend -> .)
+    $end            reduce using rule 49 (optend -> .)
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
+
+    variable                       shift and go to state 15
+    expression                     shift and go to state 34
+    optend                         shift and go to state 32
+
+state 9
+
+    (26) expression -> INTEGER .
+
+    PLUS            reduce using rule 26 (expression -> INTEGER .)
+    MINUS           reduce using rule 26 (expression -> INTEGER .)
+    MULTIPLY        reduce using rule 26 (expression -> INTEGER .)
+    DIVIDE          reduce using rule 26 (expression -> INTEGER .)
+    POWER           reduce using rule 26 (expression -> INTEGER .)
+    then            reduce using rule 26 (expression -> INTEGER .)
+    LT              reduce using rule 26 (expression -> INTEGER .)
+    LE              reduce using rule 26 (expression -> INTEGER .)
+    GT              reduce using rule 26 (expression -> INTEGER .)
+    GE              reduce using rule 26 (expression -> INTEGER .)
+    EQUALS          reduce using rule 26 (expression -> INTEGER .)
+    NE              reduce using rule 26 (expression -> INTEGER .)
+    include         reduce using rule 26 (expression -> INTEGER .)
+    outcsv          reduce using rule 26 (expression -> INTEGER .)
+    print           reduce using rule 26 (expression -> INTEGER .)
+    search          reduce using rule 26 (expression -> INTEGER .)
+    foreach         reduce using rule 26 (expression -> INTEGER .)
+    end             reduce using rule 26 (expression -> INTEGER .)
+    return          reduce using rule 26 (expression -> INTEGER .)
+    continue        reduce using rule 26 (expression -> INTEGER .)
+    if              reduce using rule 26 (expression -> INTEGER .)
+    def             reduce using rule 26 (expression -> INTEGER .)
+    let             reduce using rule 26 (expression -> INTEGER .)
+    list            reduce using rule 26 (expression -> INTEGER .)
+    $end            reduce using rule 26 (expression -> INTEGER .)
+    RPAREN          reduce using rule 26 (expression -> INTEGER .)
+    COMMA           reduce using rule 26 (expression -> INTEGER .)
+
+
+state 10
+
+    (5) command -> include . STRING
+
+    STRING          shift and go to state 35
+
+
 state 11
 
-    (9) command -> continue .
+    (12) command -> return .
+    (13) command -> return . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    $end            reduce using rule 9 (command -> continue .)
+    include         reduce using rule 12 (command -> return .)
+    outcsv          reduce using rule 12 (command -> return .)
+    print           reduce using rule 12 (command -> return .)
+    search          reduce using rule 12 (command -> return .)
+    foreach         reduce using rule 12 (command -> return .)
+    end             reduce using rule 12 (command -> return .)
+    return          reduce using rule 12 (command -> return .)
+    continue        reduce using rule 12 (command -> return .)
+    if              reduce using rule 12 (command -> return .)
+    def             reduce using rule 12 (command -> return .)
+    let             reduce using rule 12 (command -> return .)
+    list            reduce using rule 12 (command -> return .)
+    $end            reduce using rule 12 (command -> return .)
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 36
 
 state 12
 
-    (0) S' -> command .
+    (28) expression -> STRING .
 
+    PLUS            reduce using rule 28 (expression -> STRING .)
+    MINUS           reduce using rule 28 (expression -> STRING .)
+    MULTIPLY        reduce using rule 28 (expression -> STRING .)
+    DIVIDE          reduce using rule 28 (expression -> STRING .)
+    POWER           reduce using rule 28 (expression -> STRING .)
+    then            reduce using rule 28 (expression -> STRING .)
+    LT              reduce using rule 28 (expression -> STRING .)
+    LE              reduce using rule 28 (expression -> STRING .)
+    GT              reduce using rule 28 (expression -> STRING .)
+    GE              reduce using rule 28 (expression -> STRING .)
+    EQUALS          reduce using rule 28 (expression -> STRING .)
+    NE              reduce using rule 28 (expression -> STRING .)
+    include         reduce using rule 28 (expression -> STRING .)
+    outcsv          reduce using rule 28 (expression -> STRING .)
+    print           reduce using rule 28 (expression -> STRING .)
+    search          reduce using rule 28 (expression -> STRING .)
+    foreach         reduce using rule 28 (expression -> STRING .)
+    end             reduce using rule 28 (expression -> STRING .)
+    return          reduce using rule 28 (expression -> STRING .)
+    continue        reduce using rule 28 (expression -> STRING .)
+    if              reduce using rule 28 (expression -> STRING .)
+    def             reduce using rule 28 (expression -> STRING .)
+    let             reduce using rule 28 (expression -> STRING .)
+    list            reduce using rule 28 (expression -> STRING .)
+    $end            reduce using rule 28 (expression -> STRING .)
+    RPAREN          reduce using rule 28 (expression -> STRING .)
+    COMMA           reduce using rule 28 (expression -> STRING .)
 
 
 state 13
 
-    (11) command -> def . ID LPAREN RPAREN
-    (12) command -> def . ID LPAREN parlist RPAREN
+    (18) command -> let . ID EQUALS expression
+    (19) command -> let . ID EQUALS command
+    (20) command -> let . error
 
-    ID              shift and go to state 31
+    ID              shift and go to state 38
+    error           shift and go to state 37
 
 
 state 14
 
-    (23) expression -> MINUS . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (30) expression -> LPAREN . expression RPAREN
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 32
+    variable                       shift and go to state 15
+    expression                     shift and go to state 39
 
 state 15
 
-    (22) expression -> STRING .
+    (25) expression -> variable .
 
-    PLUS            reduce using rule 22 (expression -> STRING .)
-    MINUS           reduce using rule 22 (expression -> STRING .)
-    MULTIPLY        reduce using rule 22 (expression -> STRING .)
-    DIVIDE          reduce using rule 22 (expression -> STRING .)
-    POWER           reduce using rule 22 (expression -> STRING .)
-    RPAREN          reduce using rule 22 (expression -> STRING .)
-    COMMA           reduce using rule 22 (expression -> STRING .)
-    LT              reduce using rule 22 (expression -> STRING .)
-    LE              reduce using rule 22 (expression -> STRING .)
-    GT              reduce using rule 22 (expression -> STRING .)
-    GE              reduce using rule 22 (expression -> STRING .)
-    EQUALS          reduce using rule 22 (expression -> STRING .)
-    NE              reduce using rule 22 (expression -> STRING .)
-    $end            reduce using rule 22 (expression -> STRING .)
-    then            reduce using rule 22 (expression -> STRING .)
+    PLUS            reduce using rule 25 (expression -> variable .)
+    MINUS           reduce using rule 25 (expression -> variable .)
+    MULTIPLY        reduce using rule 25 (expression -> variable .)
+    DIVIDE          reduce using rule 25 (expression -> variable .)
+    POWER           reduce using rule 25 (expression -> variable .)
+    then            reduce using rule 25 (expression -> variable .)
+    LT              reduce using rule 25 (expression -> variable .)
+    LE              reduce using rule 25 (expression -> variable .)
+    GT              reduce using rule 25 (expression -> variable .)
+    GE              reduce using rule 25 (expression -> variable .)
+    EQUALS          reduce using rule 25 (expression -> variable .)
+    NE              reduce using rule 25 (expression -> variable .)
+    include         reduce using rule 25 (expression -> variable .)
+    outcsv          reduce using rule 25 (expression -> variable .)
+    print           reduce using rule 25 (expression -> variable .)
+    search          reduce using rule 25 (expression -> variable .)
+    foreach         reduce using rule 25 (expression -> variable .)
+    end             reduce using rule 25 (expression -> variable .)
+    return          reduce using rule 25 (expression -> variable .)
+    continue        reduce using rule 25 (expression -> variable .)
+    if              reduce using rule 25 (expression -> variable .)
+    def             reduce using rule 25 (expression -> variable .)
+    let             reduce using rule 25 (expression -> variable .)
+    list            reduce using rule 25 (expression -> variable .)
+    $end            reduce using rule 25 (expression -> variable .)
+    RPAREN          reduce using rule 25 (expression -> variable .)
+    COMMA           reduce using rule 25 (expression -> variable .)
 
 
 state 16
 
-    (38) variable -> DBID .
+    (42) variable -> ID .
+    (43) variable -> ID . LPAREN expression RPAREN
 
-    RPAREN          reduce using rule 38 (variable -> DBID .)
-    PLUS            reduce using rule 38 (variable -> DBID .)
-    MINUS           reduce using rule 38 (variable -> DBID .)
-    MULTIPLY        reduce using rule 38 (variable -> DBID .)
-    DIVIDE          reduce using rule 38 (variable -> DBID .)
-    POWER           reduce using rule 38 (variable -> DBID .)
-    LT              reduce using rule 38 (variable -> DBID .)
-    LE              reduce using rule 38 (variable -> DBID .)
-    GT              reduce using rule 38 (variable -> DBID .)
-    GE              reduce using rule 38 (variable -> DBID .)
-    EQUALS          reduce using rule 38 (variable -> DBID .)
-    NE              reduce using rule 38 (variable -> DBID .)
-    then            reduce using rule 38 (variable -> DBID .)
-    $end            reduce using rule 38 (variable -> DBID .)
-    COMMA           reduce using rule 38 (variable -> DBID .)
+    PLUS            reduce using rule 42 (variable -> ID .)
+    MINUS           reduce using rule 42 (variable -> ID .)
+    MULTIPLY        reduce using rule 42 (variable -> ID .)
+    DIVIDE          reduce using rule 42 (variable -> ID .)
+    POWER           reduce using rule 42 (variable -> ID .)
+    RPAREN          reduce using rule 42 (variable -> ID .)
+    COMMA           reduce using rule 42 (variable -> ID .)
+    include         reduce using rule 42 (variable -> ID .)
+    outcsv          reduce using rule 42 (variable -> ID .)
+    print           reduce using rule 42 (variable -> ID .)
+    search          reduce using rule 42 (variable -> ID .)
+    foreach         reduce using rule 42 (variable -> ID .)
+    end             reduce using rule 42 (variable -> ID .)
+    return          reduce using rule 42 (variable -> ID .)
+    continue        reduce using rule 42 (variable -> ID .)
+    if              reduce using rule 42 (variable -> ID .)
+    def             reduce using rule 42 (variable -> ID .)
+    let             reduce using rule 42 (variable -> ID .)
+    list            reduce using rule 42 (variable -> ID .)
+    $end            reduce using rule 42 (variable -> ID .)
+    LT              reduce using rule 42 (variable -> ID .)
+    LE              reduce using rule 42 (variable -> ID .)
+    GT              reduce using rule 42 (variable -> ID .)
+    GE              reduce using rule 42 (variable -> ID .)
+    EQUALS          reduce using rule 42 (variable -> ID .)
+    NE              reduce using rule 42 (variable -> ID .)
+    then            reduce using rule 42 (variable -> ID .)
+    LPAREN          shift and go to state 40
 
 
 state 17
 
-    (20) expression -> INTEGER .
+    (9) command -> search . ID as sql
 
-    PLUS            reduce using rule 20 (expression -> INTEGER .)
-    MINUS           reduce using rule 20 (expression -> INTEGER .)
-    MULTIPLY        reduce using rule 20 (expression -> INTEGER .)
-    DIVIDE          reduce using rule 20 (expression -> INTEGER .)
-    POWER           reduce using rule 20 (expression -> INTEGER .)
-    RPAREN          reduce using rule 20 (expression -> INTEGER .)
-    COMMA           reduce using rule 20 (expression -> INTEGER .)
-    LT              reduce using rule 20 (expression -> INTEGER .)
-    LE              reduce using rule 20 (expression -> INTEGER .)
-    GT              reduce using rule 20 (expression -> INTEGER .)
-    GE              reduce using rule 20 (expression -> INTEGER .)
-    EQUALS          reduce using rule 20 (expression -> INTEGER .)
-    NE              reduce using rule 20 (expression -> INTEGER .)
-    $end            reduce using rule 20 (expression -> INTEGER .)
-    then            reduce using rule 20 (expression -> INTEGER .)
+    ID              shift and go to state 41
 
 
 state 18
 
-    (10) command -> if relexpression . then
+    (27) expression -> FLOAT .
 
-    then            shift and go to state 33
+    PLUS            reduce using rule 27 (expression -> FLOAT .)
+    MINUS           reduce using rule 27 (expression -> FLOAT .)
+    MULTIPLY        reduce using rule 27 (expression -> FLOAT .)
+    DIVIDE          reduce using rule 27 (expression -> FLOAT .)
+    POWER           reduce using rule 27 (expression -> FLOAT .)
+    then            reduce using rule 27 (expression -> FLOAT .)
+    LT              reduce using rule 27 (expression -> FLOAT .)
+    LE              reduce using rule 27 (expression -> FLOAT .)
+    GT              reduce using rule 27 (expression -> FLOAT .)
+    GE              reduce using rule 27 (expression -> FLOAT .)
+    EQUALS          reduce using rule 27 (expression -> FLOAT .)
+    NE              reduce using rule 27 (expression -> FLOAT .)
+    include         reduce using rule 27 (expression -> FLOAT .)
+    outcsv          reduce using rule 27 (expression -> FLOAT .)
+    print           reduce using rule 27 (expression -> FLOAT .)
+    search          reduce using rule 27 (expression -> FLOAT .)
+    foreach         reduce using rule 27 (expression -> FLOAT .)
+    end             reduce using rule 27 (expression -> FLOAT .)
+    return          reduce using rule 27 (expression -> FLOAT .)
+    continue        reduce using rule 27 (expression -> FLOAT .)
+    if              reduce using rule 27 (expression -> FLOAT .)
+    def             reduce using rule 27 (expression -> FLOAT .)
+    let             reduce using rule 27 (expression -> FLOAT .)
+    list            reduce using rule 27 (expression -> FLOAT .)
+    $end            reduce using rule 27 (expression -> FLOAT .)
+    RPAREN          reduce using rule 27 (expression -> FLOAT .)
+    COMMA           reduce using rule 27 (expression -> FLOAT .)
 
 
 state 19
 
-    (24) expression -> LPAREN . expression RPAREN
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (21) command -> list . ID EQUALS LPAREN parlist RPAREN
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    ID              shift and go to state 42
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 34
 
 state 20
 
-    (19) expression -> variable .
+    (14) command -> continue .
 
-    PLUS            reduce using rule 19 (expression -> variable .)
-    MINUS           reduce using rule 19 (expression -> variable .)
-    MULTIPLY        reduce using rule 19 (expression -> variable .)
-    DIVIDE          reduce using rule 19 (expression -> variable .)
-    POWER           reduce using rule 19 (expression -> variable .)
-    RPAREN          reduce using rule 19 (expression -> variable .)
-    COMMA           reduce using rule 19 (expression -> variable .)
-    LT              reduce using rule 19 (expression -> variable .)
-    LE              reduce using rule 19 (expression -> variable .)
-    GT              reduce using rule 19 (expression -> variable .)
-    GE              reduce using rule 19 (expression -> variable .)
-    EQUALS          reduce using rule 19 (expression -> variable .)
-    NE              reduce using rule 19 (expression -> variable .)
-    $end            reduce using rule 19 (expression -> variable .)
-    then            reduce using rule 19 (expression -> variable .)
+    include         reduce using rule 14 (command -> continue .)
+    outcsv          reduce using rule 14 (command -> continue .)
+    print           reduce using rule 14 (command -> continue .)
+    search          reduce using rule 14 (command -> continue .)
+    foreach         reduce using rule 14 (command -> continue .)
+    end             reduce using rule 14 (command -> continue .)
+    return          reduce using rule 14 (command -> continue .)
+    continue        reduce using rule 14 (command -> continue .)
+    if              reduce using rule 14 (command -> continue .)
+    def             reduce using rule 14 (command -> continue .)
+    let             reduce using rule 14 (command -> continue .)
+    list            reduce using rule 14 (command -> continue .)
+    $end            reduce using rule 14 (command -> continue .)
 
 
 state 21
 
-    (36) variable -> ID .
-    (37) variable -> ID . LPAREN expression RPAREN
+    (2) program -> command .
 
-    RPAREN          reduce using rule 36 (variable -> ID .)
-    PLUS            reduce using rule 36 (variable -> ID .)
-    MINUS           reduce using rule 36 (variable -> ID .)
-    MULTIPLY        reduce using rule 36 (variable -> ID .)
-    DIVIDE          reduce using rule 36 (variable -> ID .)
-    POWER           reduce using rule 36 (variable -> ID .)
-    LT              reduce using rule 36 (variable -> ID .)
-    LE              reduce using rule 36 (variable -> ID .)
-    GT              reduce using rule 36 (variable -> ID .)
-    GE              reduce using rule 36 (variable -> ID .)
-    EQUALS          reduce using rule 36 (variable -> ID .)
-    NE              reduce using rule 36 (variable -> ID .)
-    then            reduce using rule 36 (variable -> ID .)
-    $end            reduce using rule 36 (variable -> ID .)
-    COMMA           reduce using rule 36 (variable -> ID .)
-    LPAREN          shift and go to state 35
+    include         reduce using rule 2 (program -> command .)
+    outcsv          reduce using rule 2 (program -> command .)
+    print           reduce using rule 2 (program -> command .)
+    search          reduce using rule 2 (program -> command .)
+    foreach         reduce using rule 2 (program -> command .)
+    end             reduce using rule 2 (program -> command .)
+    return          reduce using rule 2 (program -> command .)
+    continue        reduce using rule 2 (program -> command .)
+    if              reduce using rule 2 (program -> command .)
+    def             reduce using rule 2 (program -> command .)
+    let             reduce using rule 2 (program -> command .)
+    list            reduce using rule 2 (program -> command .)
+    $end            reduce using rule 2 (program -> command .)
 
 
 state 22
 
-    (21) expression -> FLOAT .
+    (4) program -> error .
 
-    PLUS            reduce using rule 21 (expression -> FLOAT .)
-    MINUS           reduce using rule 21 (expression -> FLOAT .)
-    MULTIPLY        reduce using rule 21 (expression -> FLOAT .)
-    DIVIDE          reduce using rule 21 (expression -> FLOAT .)
-    POWER           reduce using rule 21 (expression -> FLOAT .)
-    RPAREN          reduce using rule 21 (expression -> FLOAT .)
-    COMMA           reduce using rule 21 (expression -> FLOAT .)
-    LT              reduce using rule 21 (expression -> FLOAT .)
-    LE              reduce using rule 21 (expression -> FLOAT .)
-    GT              reduce using rule 21 (expression -> FLOAT .)
-    GE              reduce using rule 21 (expression -> FLOAT .)
-    EQUALS          reduce using rule 21 (expression -> FLOAT .)
-    NE              reduce using rule 21 (expression -> FLOAT .)
-    $end            reduce using rule 21 (expression -> FLOAT .)
-    then            reduce using rule 21 (expression -> FLOAT .)
+    include         reduce using rule 4 (program -> error .)
+    outcsv          reduce using rule 4 (program -> error .)
+    print           reduce using rule 4 (program -> error .)
+    search          reduce using rule 4 (program -> error .)
+    foreach         reduce using rule 4 (program -> error .)
+    end             reduce using rule 4 (program -> error .)
+    return          reduce using rule 4 (program -> error .)
+    continue        reduce using rule 4 (program -> error .)
+    if              reduce using rule 4 (program -> error .)
+    def             reduce using rule 4 (program -> error .)
+    let             reduce using rule 4 (program -> error .)
+    list            reduce using rule 4 (program -> error .)
+    $end            reduce using rule 4 (program -> error .)
 
 
 state 23
 
-    (30) relexpression -> expression . LT expression
-    (31) relexpression -> expression . LE expression
-    (32) relexpression -> expression . GT expression
-    (33) relexpression -> expression . GE expression
-    (34) relexpression -> expression . EQUALS expression
-    (35) relexpression -> expression . NE expression
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (3) program -> expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    LT              shift and go to state 42
-    LE              shift and go to state 36
-    GT              shift and go to state 43
-    GE              shift and go to state 37
-    EQUALS          shift and go to state 40
-    NE              shift and go to state 41
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    include         reduce using rule 3 (program -> expression .)
+    outcsv          reduce using rule 3 (program -> expression .)
+    print           reduce using rule 3 (program -> expression .)
+    search          reduce using rule 3 (program -> expression .)
+    foreach         reduce using rule 3 (program -> expression .)
+    end             reduce using rule 3 (program -> expression .)
+    return          reduce using rule 3 (program -> expression .)
+    continue        reduce using rule 3 (program -> expression .)
+    if              reduce using rule 3 (program -> expression .)
+    def             reduce using rule 3 (program -> expression .)
+    let             reduce using rule 3 (program -> expression .)
+    list            reduce using rule 3 (program -> expression .)
+    $end            reduce using rule 3 (program -> expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 24
 
-    (2) command -> outcsv ID . in STRING
+    (16) command -> def . ID LPAREN RPAREN
+    (17) command -> def . ID LPAREN parlist RPAREN
 
-    in              shift and go to state 47
+    ID              shift and go to state 48
 
 
 state 25
 
-    (6) command -> foreach ID . in ID
+    (29) expression -> MINUS expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    in              shift and go to state 48
+    PLUS            reduce using rule 29 (expression -> MINUS expression .)
+    MINUS           reduce using rule 29 (expression -> MINUS expression .)
+    MULTIPLY        reduce using rule 29 (expression -> MINUS expression .)
+    DIVIDE          reduce using rule 29 (expression -> MINUS expression .)
+    POWER           reduce using rule 29 (expression -> MINUS expression .)
+    then            reduce using rule 29 (expression -> MINUS expression .)
+    LT              reduce using rule 29 (expression -> MINUS expression .)
+    LE              reduce using rule 29 (expression -> MINUS expression .)
+    GT              reduce using rule 29 (expression -> MINUS expression .)
+    GE              reduce using rule 29 (expression -> MINUS expression .)
+    EQUALS          reduce using rule 29 (expression -> MINUS expression .)
+    NE              reduce using rule 29 (expression -> MINUS expression .)
+    include         reduce using rule 29 (expression -> MINUS expression .)
+    outcsv          reduce using rule 29 (expression -> MINUS expression .)
+    print           reduce using rule 29 (expression -> MINUS expression .)
+    search          reduce using rule 29 (expression -> MINUS expression .)
+    foreach         reduce using rule 29 (expression -> MINUS expression .)
+    end             reduce using rule 29 (expression -> MINUS expression .)
+    return          reduce using rule 29 (expression -> MINUS expression .)
+    continue        reduce using rule 29 (expression -> MINUS expression .)
+    if              reduce using rule 29 (expression -> MINUS expression .)
+    def             reduce using rule 29 (expression -> MINUS expression .)
+    let             reduce using rule 29 (expression -> MINUS expression .)
+    list            reduce using rule 29 (expression -> MINUS expression .)
+    $end            reduce using rule 29 (expression -> MINUS expression .)
+    RPAREN          reduce using rule 29 (expression -> MINUS expression .)
+    COMMA           reduce using rule 29 (expression -> MINUS expression .)
+
+  ! PLUS            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 47 ]
+  ! MULTIPLY        [ shift and go to state 46 ]
+  ! DIVIDE          [ shift and go to state 43 ]
+  ! POWER           [ shift and go to state 44 ]
 
 
 state 26
 
-    (4) command -> print expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (15) command -> if relexpression . then
 
-    $end            reduce using rule 4 (command -> print expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    then            shift and go to state 49
 
 
 state 27
 
-    (1) command -> include STRING .
+    (36) relexpression -> expression . LT expression
+    (37) relexpression -> expression . LE expression
+    (38) relexpression -> expression . GT expression
+    (39) relexpression -> expression . GE expression
+    (40) relexpression -> expression . EQUALS expression
+    (41) relexpression -> expression . NE expression
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 1 (command -> include STRING .)
+    LT              shift and go to state 54
+    LE              shift and go to state 50
+    GT              shift and go to state 55
+    GE              shift and go to state 51
+    EQUALS          shift and go to state 52
+    NE              shift and go to state 53
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 28
 
-    (13) command -> let ID . EQUALS expression
-    (14) command -> let ID . EQUALS command
+    (6) command -> outcsv ID . in STRING
 
-    EQUALS          shift and go to state 49
+    in              shift and go to state 56
 
 
 state 29
 
-    (5) command -> search ID . as sql
+    (1) program -> program command .
 
-    as              shift and go to state 50
+    include         reduce using rule 1 (program -> program command .)
+    outcsv          reduce using rule 1 (program -> program command .)
+    print           reduce using rule 1 (program -> program command .)
+    search          reduce using rule 1 (program -> program command .)
+    foreach         reduce using rule 1 (program -> program command .)
+    end             reduce using rule 1 (program -> program command .)
+    return          reduce using rule 1 (program -> program command .)
+    continue        reduce using rule 1 (program -> program command .)
+    if              reduce using rule 1 (program -> program command .)
+    def             reduce using rule 1 (program -> program command .)
+    let             reduce using rule 1 (program -> program command .)
+    list            reduce using rule 1 (program -> program command .)
+    $end            reduce using rule 1 (program -> program command .)
 
 
 state 30
 
-    (15) command -> list ID . EQUALS LPAREN parlist RPAREN
+    (10) command -> foreach ID . in ID
 
-    EQUALS          shift and go to state 51
+    in              shift and go to state 57
 
 
 state 31
 
-    (11) command -> def ID . LPAREN RPAREN
-    (12) command -> def ID . LPAREN parlist RPAREN
+    (48) optend -> SEMI .
 
-    LPAREN          shift and go to state 52
+    include         reduce using rule 48 (optend -> SEMI .)
+    outcsv          reduce using rule 48 (optend -> SEMI .)
+    print           reduce using rule 48 (optend -> SEMI .)
+    search          reduce using rule 48 (optend -> SEMI .)
+    foreach         reduce using rule 48 (optend -> SEMI .)
+    end             reduce using rule 48 (optend -> SEMI .)
+    return          reduce using rule 48 (optend -> SEMI .)
+    continue        reduce using rule 48 (optend -> SEMI .)
+    if              reduce using rule 48 (optend -> SEMI .)
+    def             reduce using rule 48 (optend -> SEMI .)
+    let             reduce using rule 48 (optend -> SEMI .)
+    list            reduce using rule 48 (optend -> SEMI .)
+    $end            reduce using rule 48 (optend -> SEMI .)
 
 
 state 32
 
-    (23) expression -> MINUS expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (7) command -> print optend .
 
-    PLUS            reduce using rule 23 (expression -> MINUS expression .)
-    MINUS           reduce using rule 23 (expression -> MINUS expression .)
-    MULTIPLY        reduce using rule 23 (expression -> MINUS expression .)
-    DIVIDE          reduce using rule 23 (expression -> MINUS expression .)
-    POWER           reduce using rule 23 (expression -> MINUS expression .)
-    RPAREN          reduce using rule 23 (expression -> MINUS expression .)
-    COMMA           reduce using rule 23 (expression -> MINUS expression .)
-    LT              reduce using rule 23 (expression -> MINUS expression .)
-    LE              reduce using rule 23 (expression -> MINUS expression .)
-    GT              reduce using rule 23 (expression -> MINUS expression .)
-    GE              reduce using rule 23 (expression -> MINUS expression .)
-    EQUALS          reduce using rule 23 (expression -> MINUS expression .)
-    NE              reduce using rule 23 (expression -> MINUS expression .)
-    $end            reduce using rule 23 (expression -> MINUS expression .)
-    then            reduce using rule 23 (expression -> MINUS expression .)
-
-  ! PLUS            [ shift and go to state 44 ]
-  ! MINUS           [ shift and go to state 46 ]
-  ! MULTIPLY        [ shift and go to state 45 ]
-  ! DIVIDE          [ shift and go to state 38 ]
-  ! POWER           [ shift and go to state 39 ]
+    include         reduce using rule 7 (command -> print optend .)
+    outcsv          reduce using rule 7 (command -> print optend .)
+    print           reduce using rule 7 (command -> print optend .)
+    search          reduce using rule 7 (command -> print optend .)
+    foreach         reduce using rule 7 (command -> print optend .)
+    end             reduce using rule 7 (command -> print optend .)
+    return          reduce using rule 7 (command -> print optend .)
+    continue        reduce using rule 7 (command -> print optend .)
+    if              reduce using rule 7 (command -> print optend .)
+    def             reduce using rule 7 (command -> print optend .)
+    let             reduce using rule 7 (command -> print optend .)
+    list            reduce using rule 7 (command -> print optend .)
+    $end            reduce using rule 7 (command -> print optend .)
 
 
 state 33
 
-    (10) command -> if relexpression then .
+    (47) optend -> COMMA .
 
-    $end            reduce using rule 10 (command -> if relexpression then .)
+    include         reduce using rule 47 (optend -> COMMA .)
+    outcsv          reduce using rule 47 (optend -> COMMA .)
+    print           reduce using rule 47 (optend -> COMMA .)
+    search          reduce using rule 47 (optend -> COMMA .)
+    foreach         reduce using rule 47 (optend -> COMMA .)
+    end             reduce using rule 47 (optend -> COMMA .)
+    return          reduce using rule 47 (optend -> COMMA .)
+    continue        reduce using rule 47 (optend -> COMMA .)
+    if              reduce using rule 47 (optend -> COMMA .)
+    def             reduce using rule 47 (optend -> COMMA .)
+    let             reduce using rule 47 (optend -> COMMA .)
+    list            reduce using rule 47 (optend -> COMMA .)
+    $end            reduce using rule 47 (optend -> COMMA .)
 
 
 state 34
 
-    (24) expression -> LPAREN expression . RPAREN
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (8) command -> print expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    RPAREN          shift and go to state 53
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    include         reduce using rule 8 (command -> print expression .)
+    outcsv          reduce using rule 8 (command -> print expression .)
+    print           reduce using rule 8 (command -> print expression .)
+    search          reduce using rule 8 (command -> print expression .)
+    foreach         reduce using rule 8 (command -> print expression .)
+    end             reduce using rule 8 (command -> print expression .)
+    return          reduce using rule 8 (command -> print expression .)
+    continue        reduce using rule 8 (command -> print expression .)
+    if              reduce using rule 8 (command -> print expression .)
+    def             reduce using rule 8 (command -> print expression .)
+    let             reduce using rule 8 (command -> print expression .)
+    list            reduce using rule 8 (command -> print expression .)
+    $end            reduce using rule 8 (command -> print expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 35
 
-    (37) variable -> ID LPAREN . expression RPAREN
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (5) command -> include STRING .
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    include         reduce using rule 5 (command -> include STRING .)
+    outcsv          reduce using rule 5 (command -> include STRING .)
+    print           reduce using rule 5 (command -> include STRING .)
+    search          reduce using rule 5 (command -> include STRING .)
+    foreach         reduce using rule 5 (command -> include STRING .)
+    end             reduce using rule 5 (command -> include STRING .)
+    return          reduce using rule 5 (command -> include STRING .)
+    continue        reduce using rule 5 (command -> include STRING .)
+    if              reduce using rule 5 (command -> include STRING .)
+    def             reduce using rule 5 (command -> include STRING .)
+    let             reduce using rule 5 (command -> include STRING .)
+    list            reduce using rule 5 (command -> include STRING .)
+    $end            reduce using rule 5 (command -> include STRING .)
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 54
 
 state 36
 
-    (31) relexpression -> expression LE . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (13) command -> return expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    include         reduce using rule 13 (command -> return expression .)
+    outcsv          reduce using rule 13 (command -> return expression .)
+    print           reduce using rule 13 (command -> return expression .)
+    search          reduce using rule 13 (command -> return expression .)
+    foreach         reduce using rule 13 (command -> return expression .)
+    end             reduce using rule 13 (command -> return expression .)
+    return          reduce using rule 13 (command -> return expression .)
+    continue        reduce using rule 13 (command -> return expression .)
+    if              reduce using rule 13 (command -> return expression .)
+    def             reduce using rule 13 (command -> return expression .)
+    let             reduce using rule 13 (command -> return expression .)
+    list            reduce using rule 13 (command -> return expression .)
+    $end            reduce using rule 13 (command -> return expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 55
 
 state 37
 
-    (33) relexpression -> expression GE . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (20) command -> let error .
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    include         reduce using rule 20 (command -> let error .)
+    outcsv          reduce using rule 20 (command -> let error .)
+    print           reduce using rule 20 (command -> let error .)
+    search          reduce using rule 20 (command -> let error .)
+    foreach         reduce using rule 20 (command -> let error .)
+    end             reduce using rule 20 (command -> let error .)
+    return          reduce using rule 20 (command -> let error .)
+    continue        reduce using rule 20 (command -> let error .)
+    if              reduce using rule 20 (command -> let error .)
+    def             reduce using rule 20 (command -> let error .)
+    let             reduce using rule 20 (command -> let error .)
+    list            reduce using rule 20 (command -> let error .)
+    $end            reduce using rule 20 (command -> let error .)
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 56
 
 state 38
 
-    (28) expression -> expression DIVIDE . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (18) command -> let ID . EQUALS expression
+    (19) command -> let ID . EQUALS command
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    EQUALS          shift and go to state 58
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 57
 
 state 39
 
-    (29) expression -> expression POWER . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (30) expression -> LPAREN expression . RPAREN
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    RPAREN          shift and go to state 59
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 58
 
 state 40
 
-    (34) relexpression -> expression EQUALS . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (43) variable -> ID LPAREN . expression RPAREN
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 59
+    variable                       shift and go to state 15
+    expression                     shift and go to state 60
 
 state 41
 
-    (35) relexpression -> expression NE . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (9) command -> search ID . as sql
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    as              shift and go to state 61
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 60
 
 state 42
 
-    (30) relexpression -> expression LT . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (21) command -> list ID . EQUALS LPAREN parlist RPAREN
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    EQUALS          shift and go to state 62
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 61
 
 state 43
 
-    (32) relexpression -> expression GT . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (34) expression -> expression DIVIDE . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 62
+    variable                       shift and go to state 15
+    expression                     shift and go to state 63
 
 state 44
 
-    (25) expression -> expression PLUS . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (35) expression -> expression POWER . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 63
+    variable                       shift and go to state 15
+    expression                     shift and go to state 64
 
 state 45
 
-    (27) expression -> expression MULTIPLY . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (31) expression -> expression PLUS . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 64
+    variable                       shift and go to state 15
+    expression                     shift and go to state 65
 
 state 46
 
-    (26) expression -> expression MINUS . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (33) expression -> expression MULTIPLY . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 65
+    variable                       shift and go to state 15
+    expression                     shift and go to state 66
 
 state 47
 
-    (2) command -> outcsv ID in . STRING
+    (32) expression -> expression MINUS . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    STRING          shift and go to state 66
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 67
 
 state 48
 
-    (6) command -> foreach ID in . ID
+    (16) command -> def ID . LPAREN RPAREN
+    (17) command -> def ID . LPAREN parlist RPAREN
 
-    ID              shift and go to state 67
+    LPAREN          shift and go to state 68
 
 
 state 49
 
-    (13) command -> let ID EQUALS . expression
-    (14) command -> let ID EQUALS . command
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (1) command -> . include STRING
-    (2) command -> . outcsv ID in STRING
-    (3) command -> . print
-    (4) command -> . print expression
-    (5) command -> . search ID as sql
-    (6) command -> . foreach ID in ID
-    (7) command -> . end
-    (8) command -> . return
-    (9) command -> . continue
-    (10) command -> . if relexpression then
-    (11) command -> . def ID LPAREN RPAREN
-    (12) command -> . def ID LPAREN parlist RPAREN
-    (13) command -> . let ID EQUALS expression
-    (14) command -> . let ID EQUALS command
-    (15) command -> . list ID EQUALS LPAREN parlist RPAREN
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (15) command -> if relexpression then .
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    include         shift and go to state 6
-    outcsv          shift and go to state 3
-    print           shift and go to state 5
-    search          shift and go to state 9
-    foreach         shift and go to state 4
-    end             shift and go to state 2
-    return          shift and go to state 7
-    continue        shift and go to state 11
-    if              shift and go to state 1
-    def             shift and go to state 13
-    let             shift and go to state 8
-    list            shift and go to state 10
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    include         reduce using rule 15 (command -> if relexpression then .)
+    outcsv          reduce using rule 15 (command -> if relexpression then .)
+    print           reduce using rule 15 (command -> if relexpression then .)
+    search          reduce using rule 15 (command -> if relexpression then .)
+    foreach         reduce using rule 15 (command -> if relexpression then .)
+    end             reduce using rule 15 (command -> if relexpression then .)
+    return          reduce using rule 15 (command -> if relexpression then .)
+    continue        reduce using rule 15 (command -> if relexpression then .)
+    if              reduce using rule 15 (command -> if relexpression then .)
+    def             reduce using rule 15 (command -> if relexpression then .)
+    let             reduce using rule 15 (command -> if relexpression then .)
+    list            reduce using rule 15 (command -> if relexpression then .)
+    $end            reduce using rule 15 (command -> if relexpression then .)
 
-    command                        shift and go to state 68
-    variable                       shift and go to state 20
-    expression                     shift and go to state 69
 
 state 50
 
-    (5) command -> search ID as . sql
-    (16) sql -> . SELECT
-    (17) sql -> . INSERT
-    (18) sql -> . UPDATE
+    (37) relexpression -> expression LE . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    SELECT          shift and go to state 73
-    INSERT          shift and go to state 70
-    UPDATE          shift and go to state 71
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    sql                            shift and go to state 72
+    variable                       shift and go to state 15
+    expression                     shift and go to state 69
 
 state 51
 
-    (15) command -> list ID EQUALS . LPAREN parlist RPAREN
+    (39) relexpression -> expression GE . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    LPAREN          shift and go to state 74
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 70
 
 state 52
 
-    (11) command -> def ID LPAREN . RPAREN
-    (12) command -> def ID LPAREN . parlist RPAREN
-    (39) parlist -> . parlist COMMA expression
-    (40) parlist -> . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (40) relexpression -> expression EQUALS . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    RPAREN          shift and go to state 75
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 77
-    parlist                        shift and go to state 76
+    variable                       shift and go to state 15
+    expression                     shift and go to state 71
 
 state 53
 
-    (24) expression -> LPAREN expression RPAREN .
+    (41) relexpression -> expression NE . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    PLUS            reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    MULTIPLY        reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    POWER           reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    COMMA           reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    LT              reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    LE              reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    GT              reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    GE              reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    EQUALS          reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    NE              reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    $end            reduce using rule 24 (expression -> LPAREN expression RPAREN .)
-    then            reduce using rule 24 (expression -> LPAREN expression RPAREN .)
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 72
 
 state 54
 
-    (37) variable -> ID LPAREN expression . RPAREN
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (36) relexpression -> expression LT . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    RPAREN          shift and go to state 78
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 73
 
 state 55
 
-    (31) relexpression -> expression LE expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (38) relexpression -> expression GT . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    then            reduce using rule 31 (relexpression -> expression LE expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 74
 
 state 56
 
-    (33) relexpression -> expression GE expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (6) command -> outcsv ID in . STRING
 
-    then            reduce using rule 33 (relexpression -> expression GE expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    STRING          shift and go to state 75
 
 
 state 57
 
-    (28) expression -> expression DIVIDE expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (10) command -> foreach ID in . ID
 
-    PLUS            reduce using rule 28 (expression -> expression DIVIDE expression .)
-    MINUS           reduce using rule 28 (expression -> expression DIVIDE expression .)
-    MULTIPLY        reduce using rule 28 (expression -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 28 (expression -> expression DIVIDE expression .)
-    RPAREN          reduce using rule 28 (expression -> expression DIVIDE expression .)
-    COMMA           reduce using rule 28 (expression -> expression DIVIDE expression .)
-    LT              reduce using rule 28 (expression -> expression DIVIDE expression .)
-    LE              reduce using rule 28 (expression -> expression DIVIDE expression .)
-    GT              reduce using rule 28 (expression -> expression DIVIDE expression .)
-    GE              reduce using rule 28 (expression -> expression DIVIDE expression .)
-    EQUALS          reduce using rule 28 (expression -> expression DIVIDE expression .)
-    NE              reduce using rule 28 (expression -> expression DIVIDE expression .)
-    $end            reduce using rule 28 (expression -> expression DIVIDE expression .)
-    then            reduce using rule 28 (expression -> expression DIVIDE expression .)
-    POWER           shift and go to state 39
-
-  ! POWER           [ reduce using rule 28 (expression -> expression DIVIDE expression .) ]
-  ! PLUS            [ shift and go to state 44 ]
-  ! MINUS           [ shift and go to state 46 ]
-  ! MULTIPLY        [ shift and go to state 45 ]
-  ! DIVIDE          [ shift and go to state 38 ]
+    ID              shift and go to state 76
 
 
 state 58
 
-    (29) expression -> expression POWER expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (18) command -> let ID EQUALS . expression
+    (19) command -> let ID EQUALS . command
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (5) command -> . include STRING
+    (6) command -> . outcsv ID in STRING
+    (7) command -> . print optend
+    (8) command -> . print expression
+    (9) command -> . search ID as sql
+    (10) command -> . foreach ID in ID
+    (11) command -> . end
+    (12) command -> . return
+    (13) command -> . return expression
+    (14) command -> . continue
+    (15) command -> . if relexpression then
+    (16) command -> . def ID LPAREN RPAREN
+    (17) command -> . def ID LPAREN parlist RPAREN
+    (18) command -> . let ID EQUALS expression
+    (19) command -> . let ID EQUALS command
+    (20) command -> . let error
+    (21) command -> . list ID EQUALS LPAREN parlist RPAREN
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    PLUS            reduce using rule 29 (expression -> expression POWER expression .)
-    MINUS           reduce using rule 29 (expression -> expression POWER expression .)
-    MULTIPLY        reduce using rule 29 (expression -> expression POWER expression .)
-    DIVIDE          reduce using rule 29 (expression -> expression POWER expression .)
-    POWER           reduce using rule 29 (expression -> expression POWER expression .)
-    RPAREN          reduce using rule 29 (expression -> expression POWER expression .)
-    COMMA           reduce using rule 29 (expression -> expression POWER expression .)
-    LT              reduce using rule 29 (expression -> expression POWER expression .)
-    LE              reduce using rule 29 (expression -> expression POWER expression .)
-    GT              reduce using rule 29 (expression -> expression POWER expression .)
-    GE              reduce using rule 29 (expression -> expression POWER expression .)
-    EQUALS          reduce using rule 29 (expression -> expression POWER expression .)
-    NE              reduce using rule 29 (expression -> expression POWER expression .)
-    $end            reduce using rule 29 (expression -> expression POWER expression .)
-    then            reduce using rule 29 (expression -> expression POWER expression .)
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    include         shift and go to state 10
+    outcsv          shift and go to state 5
+    print           shift and go to state 8
+    search          shift and go to state 17
+    foreach         shift and go to state 7
+    end             shift and go to state 3
+    return          shift and go to state 11
+    continue        shift and go to state 20
+    if              shift and go to state 2
+    def             shift and go to state 24
+    let             shift and go to state 13
+    list            shift and go to state 19
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
-  ! PLUS            [ shift and go to state 44 ]
-  ! MINUS           [ shift and go to state 46 ]
-  ! MULTIPLY        [ shift and go to state 45 ]
-  ! DIVIDE          [ shift and go to state 38 ]
-  ! POWER           [ shift and go to state 39 ]
-
+    command                        shift and go to state 77
+    variable                       shift and go to state 15
+    expression                     shift and go to state 78
 
 state 59
 
-    (34) relexpression -> expression EQUALS expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (30) expression -> LPAREN expression RPAREN .
 
-    then            reduce using rule 34 (relexpression -> expression EQUALS expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    PLUS            reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    MULTIPLY        reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    POWER           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    then            reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    LT              reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    LE              reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    GT              reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    GE              reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    EQUALS          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    NE              reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    include         reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    outcsv          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    print           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    search          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    foreach         reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    end             reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    return          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    continue        reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    if              reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    def             reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    let             reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    list            reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 30 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 30 (expression -> LPAREN expression RPAREN .)
 
 
 state 60
 
-    (35) relexpression -> expression NE expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (43) variable -> ID LPAREN expression . RPAREN
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    then            reduce using rule 35 (relexpression -> expression NE expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    RPAREN          shift and go to state 79
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 61
 
-    (30) relexpression -> expression LT expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (9) command -> search ID as . sql
+    (22) sql -> . SELECT
+    (23) sql -> . INSERT
+    (24) sql -> . UPDATE
 
-    then            reduce using rule 30 (relexpression -> expression LT expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    SELECT          shift and go to state 83
+    INSERT          shift and go to state 80
+    UPDATE          shift and go to state 81
 
+    sql                            shift and go to state 82
 
 state 62
 
-    (32) relexpression -> expression GT expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (21) command -> list ID EQUALS . LPAREN parlist RPAREN
 
-    then            reduce using rule 32 (relexpression -> expression GT expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    LPAREN          shift and go to state 84
 
 
 state 63
 
-    (25) expression -> expression PLUS expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (34) expression -> expression DIVIDE expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    PLUS            reduce using rule 25 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 25 (expression -> expression PLUS expression .)
-    RPAREN          reduce using rule 25 (expression -> expression PLUS expression .)
-    COMMA           reduce using rule 25 (expression -> expression PLUS expression .)
-    LT              reduce using rule 25 (expression -> expression PLUS expression .)
-    LE              reduce using rule 25 (expression -> expression PLUS expression .)
-    GT              reduce using rule 25 (expression -> expression PLUS expression .)
-    GE              reduce using rule 25 (expression -> expression PLUS expression .)
-    EQUALS          reduce using rule 25 (expression -> expression PLUS expression .)
-    NE              reduce using rule 25 (expression -> expression PLUS expression .)
-    $end            reduce using rule 25 (expression -> expression PLUS expression .)
-    then            reduce using rule 25 (expression -> expression PLUS expression .)
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    PLUS            reduce using rule 34 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 34 (expression -> expression DIVIDE expression .)
+    MULTIPLY        reduce using rule 34 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 34 (expression -> expression DIVIDE expression .)
+    then            reduce using rule 34 (expression -> expression DIVIDE expression .)
+    LT              reduce using rule 34 (expression -> expression DIVIDE expression .)
+    LE              reduce using rule 34 (expression -> expression DIVIDE expression .)
+    GT              reduce using rule 34 (expression -> expression DIVIDE expression .)
+    GE              reduce using rule 34 (expression -> expression DIVIDE expression .)
+    EQUALS          reduce using rule 34 (expression -> expression DIVIDE expression .)
+    NE              reduce using rule 34 (expression -> expression DIVIDE expression .)
+    include         reduce using rule 34 (expression -> expression DIVIDE expression .)
+    outcsv          reduce using rule 34 (expression -> expression DIVIDE expression .)
+    print           reduce using rule 34 (expression -> expression DIVIDE expression .)
+    search          reduce using rule 34 (expression -> expression DIVIDE expression .)
+    foreach         reduce using rule 34 (expression -> expression DIVIDE expression .)
+    end             reduce using rule 34 (expression -> expression DIVIDE expression .)
+    return          reduce using rule 34 (expression -> expression DIVIDE expression .)
+    continue        reduce using rule 34 (expression -> expression DIVIDE expression .)
+    if              reduce using rule 34 (expression -> expression DIVIDE expression .)
+    def             reduce using rule 34 (expression -> expression DIVIDE expression .)
+    let             reduce using rule 34 (expression -> expression DIVIDE expression .)
+    list            reduce using rule 34 (expression -> expression DIVIDE expression .)
+    $end            reduce using rule 34 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 34 (expression -> expression DIVIDE expression .)
+    COMMA           reduce using rule 34 (expression -> expression DIVIDE expression .)
+    POWER           shift and go to state 44
 
-  ! MULTIPLY        [ reduce using rule 25 (expression -> expression PLUS expression .) ]
-  ! DIVIDE          [ reduce using rule 25 (expression -> expression PLUS expression .) ]
-  ! POWER           [ reduce using rule 25 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 44 ]
-  ! MINUS           [ shift and go to state 46 ]
+  ! POWER           [ reduce using rule 34 (expression -> expression DIVIDE expression .) ]
+  ! PLUS            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 47 ]
+  ! MULTIPLY        [ shift and go to state 46 ]
+  ! DIVIDE          [ shift and go to state 43 ]
 
 
 state 64
 
-    (27) expression -> expression MULTIPLY expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (35) expression -> expression POWER expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    PLUS            reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    MINUS           reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    MULTIPLY        reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    DIVIDE          reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    RPAREN          reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    COMMA           reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    LT              reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    LE              reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    GT              reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    GE              reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    EQUALS          reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    NE              reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    $end            reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    then            reduce using rule 27 (expression -> expression MULTIPLY expression .)
-    POWER           shift and go to state 39
+    PLUS            reduce using rule 35 (expression -> expression POWER expression .)
+    MINUS           reduce using rule 35 (expression -> expression POWER expression .)
+    MULTIPLY        reduce using rule 35 (expression -> expression POWER expression .)
+    DIVIDE          reduce using rule 35 (expression -> expression POWER expression .)
+    POWER           reduce using rule 35 (expression -> expression POWER expression .)
+    then            reduce using rule 35 (expression -> expression POWER expression .)
+    LT              reduce using rule 35 (expression -> expression POWER expression .)
+    LE              reduce using rule 35 (expression -> expression POWER expression .)
+    GT              reduce using rule 35 (expression -> expression POWER expression .)
+    GE              reduce using rule 35 (expression -> expression POWER expression .)
+    EQUALS          reduce using rule 35 (expression -> expression POWER expression .)
+    NE              reduce using rule 35 (expression -> expression POWER expression .)
+    include         reduce using rule 35 (expression -> expression POWER expression .)
+    outcsv          reduce using rule 35 (expression -> expression POWER expression .)
+    print           reduce using rule 35 (expression -> expression POWER expression .)
+    search          reduce using rule 35 (expression -> expression POWER expression .)
+    foreach         reduce using rule 35 (expression -> expression POWER expression .)
+    end             reduce using rule 35 (expression -> expression POWER expression .)
+    return          reduce using rule 35 (expression -> expression POWER expression .)
+    continue        reduce using rule 35 (expression -> expression POWER expression .)
+    if              reduce using rule 35 (expression -> expression POWER expression .)
+    def             reduce using rule 35 (expression -> expression POWER expression .)
+    let             reduce using rule 35 (expression -> expression POWER expression .)
+    list            reduce using rule 35 (expression -> expression POWER expression .)
+    $end            reduce using rule 35 (expression -> expression POWER expression .)
+    RPAREN          reduce using rule 35 (expression -> expression POWER expression .)
+    COMMA           reduce using rule 35 (expression -> expression POWER expression .)
 
-  ! POWER           [ reduce using rule 27 (expression -> expression MULTIPLY expression .) ]
-  ! PLUS            [ shift and go to state 44 ]
-  ! MINUS           [ shift and go to state 46 ]
-  ! MULTIPLY        [ shift and go to state 45 ]
-  ! DIVIDE          [ shift and go to state 38 ]
+  ! PLUS            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 47 ]
+  ! MULTIPLY        [ shift and go to state 46 ]
+  ! DIVIDE          [ shift and go to state 43 ]
+  ! POWER           [ shift and go to state 44 ]
 
 
 state 65
 
-    (26) expression -> expression MINUS expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (31) expression -> expression PLUS expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    PLUS            reduce using rule 26 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 26 (expression -> expression MINUS expression .)
-    RPAREN          reduce using rule 26 (expression -> expression MINUS expression .)
-    COMMA           reduce using rule 26 (expression -> expression MINUS expression .)
-    LT              reduce using rule 26 (expression -> expression MINUS expression .)
-    LE              reduce using rule 26 (expression -> expression MINUS expression .)
-    GT              reduce using rule 26 (expression -> expression MINUS expression .)
-    GE              reduce using rule 26 (expression -> expression MINUS expression .)
-    EQUALS          reduce using rule 26 (expression -> expression MINUS expression .)
-    NE              reduce using rule 26 (expression -> expression MINUS expression .)
-    $end            reduce using rule 26 (expression -> expression MINUS expression .)
-    then            reduce using rule 26 (expression -> expression MINUS expression .)
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    PLUS            reduce using rule 31 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 31 (expression -> expression PLUS expression .)
+    then            reduce using rule 31 (expression -> expression PLUS expression .)
+    LT              reduce using rule 31 (expression -> expression PLUS expression .)
+    LE              reduce using rule 31 (expression -> expression PLUS expression .)
+    GT              reduce using rule 31 (expression -> expression PLUS expression .)
+    GE              reduce using rule 31 (expression -> expression PLUS expression .)
+    EQUALS          reduce using rule 31 (expression -> expression PLUS expression .)
+    NE              reduce using rule 31 (expression -> expression PLUS expression .)
+    include         reduce using rule 31 (expression -> expression PLUS expression .)
+    outcsv          reduce using rule 31 (expression -> expression PLUS expression .)
+    print           reduce using rule 31 (expression -> expression PLUS expression .)
+    search          reduce using rule 31 (expression -> expression PLUS expression .)
+    foreach         reduce using rule 31 (expression -> expression PLUS expression .)
+    end             reduce using rule 31 (expression -> expression PLUS expression .)
+    return          reduce using rule 31 (expression -> expression PLUS expression .)
+    continue        reduce using rule 31 (expression -> expression PLUS expression .)
+    if              reduce using rule 31 (expression -> expression PLUS expression .)
+    def             reduce using rule 31 (expression -> expression PLUS expression .)
+    let             reduce using rule 31 (expression -> expression PLUS expression .)
+    list            reduce using rule 31 (expression -> expression PLUS expression .)
+    $end            reduce using rule 31 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 31 (expression -> expression PLUS expression .)
+    COMMA           reduce using rule 31 (expression -> expression PLUS expression .)
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
-  ! MULTIPLY        [ reduce using rule 26 (expression -> expression MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 26 (expression -> expression MINUS expression .) ]
-  ! POWER           [ reduce using rule 26 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 44 ]
-  ! MINUS           [ shift and go to state 46 ]
+  ! MULTIPLY        [ reduce using rule 31 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 31 (expression -> expression PLUS expression .) ]
+  ! POWER           [ reduce using rule 31 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 47 ]
 
 
 state 66
 
-    (2) command -> outcsv ID in STRING .
+    (33) expression -> expression MULTIPLY expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 2 (command -> outcsv ID in STRING .)
+    PLUS            reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    MINUS           reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    MULTIPLY        reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    DIVIDE          reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    then            reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    LT              reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    LE              reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    GT              reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    GE              reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    EQUALS          reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    NE              reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    include         reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    outcsv          reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    print           reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    search          reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    foreach         reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    end             reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    return          reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    continue        reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    if              reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    def             reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    let             reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    list            reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    $end            reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    RPAREN          reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    COMMA           reduce using rule 33 (expression -> expression MULTIPLY expression .)
+    POWER           shift and go to state 44
+
+  ! POWER           [ reduce using rule 33 (expression -> expression MULTIPLY expression .) ]
+  ! PLUS            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 47 ]
+  ! MULTIPLY        [ shift and go to state 46 ]
+  ! DIVIDE          [ shift and go to state 43 ]
 
 
 state 67
 
-    (6) command -> foreach ID in ID .
+    (32) expression -> expression MINUS expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 6 (command -> foreach ID in ID .)
+    PLUS            reduce using rule 32 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 32 (expression -> expression MINUS expression .)
+    then            reduce using rule 32 (expression -> expression MINUS expression .)
+    LT              reduce using rule 32 (expression -> expression MINUS expression .)
+    LE              reduce using rule 32 (expression -> expression MINUS expression .)
+    GT              reduce using rule 32 (expression -> expression MINUS expression .)
+    GE              reduce using rule 32 (expression -> expression MINUS expression .)
+    EQUALS          reduce using rule 32 (expression -> expression MINUS expression .)
+    NE              reduce using rule 32 (expression -> expression MINUS expression .)
+    include         reduce using rule 32 (expression -> expression MINUS expression .)
+    outcsv          reduce using rule 32 (expression -> expression MINUS expression .)
+    print           reduce using rule 32 (expression -> expression MINUS expression .)
+    search          reduce using rule 32 (expression -> expression MINUS expression .)
+    foreach         reduce using rule 32 (expression -> expression MINUS expression .)
+    end             reduce using rule 32 (expression -> expression MINUS expression .)
+    return          reduce using rule 32 (expression -> expression MINUS expression .)
+    continue        reduce using rule 32 (expression -> expression MINUS expression .)
+    if              reduce using rule 32 (expression -> expression MINUS expression .)
+    def             reduce using rule 32 (expression -> expression MINUS expression .)
+    let             reduce using rule 32 (expression -> expression MINUS expression .)
+    list            reduce using rule 32 (expression -> expression MINUS expression .)
+    $end            reduce using rule 32 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 32 (expression -> expression MINUS expression .)
+    COMMA           reduce using rule 32 (expression -> expression MINUS expression .)
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
+
+  ! MULTIPLY        [ reduce using rule 32 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 32 (expression -> expression MINUS expression .) ]
+  ! POWER           [ reduce using rule 32 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 45 ]
+  ! MINUS           [ shift and go to state 47 ]
 
 
 state 68
 
-    (14) command -> let ID EQUALS command .
+    (16) command -> def ID LPAREN . RPAREN
+    (17) command -> def ID LPAREN . parlist RPAREN
+    (45) parlist -> . parlist COMMA expression
+    (46) parlist -> . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
 
-    $end            reduce using rule 14 (command -> let ID EQUALS command .)
+    RPAREN          shift and go to state 85
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
 
+    variable                       shift and go to state 15
+    expression                     shift and go to state 87
+    parlist                        shift and go to state 86
 
 state 69
 
-    (13) command -> let ID EQUALS expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (37) relexpression -> expression LE expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 13 (command -> let ID EQUALS expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    then            reduce using rule 37 (relexpression -> expression LE expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 70
 
-    (17) sql -> INSERT .
+    (39) relexpression -> expression GE expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 17 (sql -> INSERT .)
+    then            reduce using rule 39 (relexpression -> expression GE expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 71
 
-    (18) sql -> UPDATE .
+    (40) relexpression -> expression EQUALS expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 18 (sql -> UPDATE .)
+    then            reduce using rule 40 (relexpression -> expression EQUALS expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 72
 
-    (5) command -> search ID as sql .
+    (41) relexpression -> expression NE expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 5 (command -> search ID as sql .)
+    then            reduce using rule 41 (relexpression -> expression NE expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 73
 
-    (16) sql -> SELECT .
+    (36) relexpression -> expression LT expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    $end            reduce using rule 16 (sql -> SELECT .)
+    then            reduce using rule 36 (relexpression -> expression LT expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 74
 
-    (15) command -> list ID EQUALS LPAREN . parlist RPAREN
-    (39) parlist -> . parlist COMMA expression
-    (40) parlist -> . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (38) relexpression -> expression GT expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    then            reduce using rule 38 (relexpression -> expression GT expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 77
-    parlist                        shift and go to state 79
 
 state 75
 
-    (11) command -> def ID LPAREN RPAREN .
+    (6) command -> outcsv ID in STRING .
 
-    $end            reduce using rule 11 (command -> def ID LPAREN RPAREN .)
+    include         reduce using rule 6 (command -> outcsv ID in STRING .)
+    outcsv          reduce using rule 6 (command -> outcsv ID in STRING .)
+    print           reduce using rule 6 (command -> outcsv ID in STRING .)
+    search          reduce using rule 6 (command -> outcsv ID in STRING .)
+    foreach         reduce using rule 6 (command -> outcsv ID in STRING .)
+    end             reduce using rule 6 (command -> outcsv ID in STRING .)
+    return          reduce using rule 6 (command -> outcsv ID in STRING .)
+    continue        reduce using rule 6 (command -> outcsv ID in STRING .)
+    if              reduce using rule 6 (command -> outcsv ID in STRING .)
+    def             reduce using rule 6 (command -> outcsv ID in STRING .)
+    let             reduce using rule 6 (command -> outcsv ID in STRING .)
+    list            reduce using rule 6 (command -> outcsv ID in STRING .)
+    $end            reduce using rule 6 (command -> outcsv ID in STRING .)
 
 
 state 76
 
-    (12) command -> def ID LPAREN parlist . RPAREN
-    (39) parlist -> parlist . COMMA expression
+    (10) command -> foreach ID in ID .
 
-    RPAREN          shift and go to state 80
-    COMMA           shift and go to state 81
+    include         reduce using rule 10 (command -> foreach ID in ID .)
+    outcsv          reduce using rule 10 (command -> foreach ID in ID .)
+    print           reduce using rule 10 (command -> foreach ID in ID .)
+    search          reduce using rule 10 (command -> foreach ID in ID .)
+    foreach         reduce using rule 10 (command -> foreach ID in ID .)
+    end             reduce using rule 10 (command -> foreach ID in ID .)
+    return          reduce using rule 10 (command -> foreach ID in ID .)
+    continue        reduce using rule 10 (command -> foreach ID in ID .)
+    if              reduce using rule 10 (command -> foreach ID in ID .)
+    def             reduce using rule 10 (command -> foreach ID in ID .)
+    let             reduce using rule 10 (command -> foreach ID in ID .)
+    list            reduce using rule 10 (command -> foreach ID in ID .)
+    $end            reduce using rule 10 (command -> foreach ID in ID .)
 
 
 state 77
 
-    (40) parlist -> expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (19) command -> let ID EQUALS command .
 
-    RPAREN          reduce using rule 40 (parlist -> expression .)
-    COMMA           reduce using rule 40 (parlist -> expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    include         reduce using rule 19 (command -> let ID EQUALS command .)
+    outcsv          reduce using rule 19 (command -> let ID EQUALS command .)
+    print           reduce using rule 19 (command -> let ID EQUALS command .)
+    search          reduce using rule 19 (command -> let ID EQUALS command .)
+    foreach         reduce using rule 19 (command -> let ID EQUALS command .)
+    end             reduce using rule 19 (command -> let ID EQUALS command .)
+    return          reduce using rule 19 (command -> let ID EQUALS command .)
+    continue        reduce using rule 19 (command -> let ID EQUALS command .)
+    if              reduce using rule 19 (command -> let ID EQUALS command .)
+    def             reduce using rule 19 (command -> let ID EQUALS command .)
+    let             reduce using rule 19 (command -> let ID EQUALS command .)
+    list            reduce using rule 19 (command -> let ID EQUALS command .)
+    $end            reduce using rule 19 (command -> let ID EQUALS command .)
 
 
 state 78
 
-    (37) variable -> ID LPAREN expression RPAREN .
+    (18) command -> let ID EQUALS expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
 
-    RPAREN          reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    PLUS            reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    MINUS           reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    MULTIPLY        reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    POWER           reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    LT              reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    LE              reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    GT              reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    GE              reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    EQUALS          reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    NE              reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    then            reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    $end            reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
-    COMMA           reduce using rule 37 (variable -> ID LPAREN expression RPAREN .)
+    include         reduce using rule 18 (command -> let ID EQUALS expression .)
+    outcsv          reduce using rule 18 (command -> let ID EQUALS expression .)
+    print           reduce using rule 18 (command -> let ID EQUALS expression .)
+    search          reduce using rule 18 (command -> let ID EQUALS expression .)
+    foreach         reduce using rule 18 (command -> let ID EQUALS expression .)
+    end             reduce using rule 18 (command -> let ID EQUALS expression .)
+    return          reduce using rule 18 (command -> let ID EQUALS expression .)
+    continue        reduce using rule 18 (command -> let ID EQUALS expression .)
+    if              reduce using rule 18 (command -> let ID EQUALS expression .)
+    def             reduce using rule 18 (command -> let ID EQUALS expression .)
+    let             reduce using rule 18 (command -> let ID EQUALS expression .)
+    list            reduce using rule 18 (command -> let ID EQUALS expression .)
+    $end            reduce using rule 18 (command -> let ID EQUALS expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 
 
 state 79
 
-    (15) command -> list ID EQUALS LPAREN parlist . RPAREN
-    (39) parlist -> parlist . COMMA expression
+    (43) variable -> ID LPAREN expression RPAREN .
 
-    RPAREN          shift and go to state 82
-    COMMA           shift and go to state 81
+    PLUS            reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    MINUS           reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    MULTIPLY        reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    POWER           reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    COMMA           reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    include         reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    outcsv          reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    print           reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    search          reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    foreach         reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    end             reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    return          reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    continue        reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    if              reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    def             reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    let             reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    list            reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    $end            reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    LT              reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    LE              reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    GT              reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    GE              reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    EQUALS          reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    NE              reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
+    then            reduce using rule 43 (variable -> ID LPAREN expression RPAREN .)
 
 
 state 80
 
-    (12) command -> def ID LPAREN parlist RPAREN .
+    (23) sql -> INSERT .
 
-    $end            reduce using rule 12 (command -> def ID LPAREN parlist RPAREN .)
+    include         reduce using rule 23 (sql -> INSERT .)
+    outcsv          reduce using rule 23 (sql -> INSERT .)
+    print           reduce using rule 23 (sql -> INSERT .)
+    search          reduce using rule 23 (sql -> INSERT .)
+    foreach         reduce using rule 23 (sql -> INSERT .)
+    end             reduce using rule 23 (sql -> INSERT .)
+    return          reduce using rule 23 (sql -> INSERT .)
+    continue        reduce using rule 23 (sql -> INSERT .)
+    if              reduce using rule 23 (sql -> INSERT .)
+    def             reduce using rule 23 (sql -> INSERT .)
+    let             reduce using rule 23 (sql -> INSERT .)
+    list            reduce using rule 23 (sql -> INSERT .)
+    $end            reduce using rule 23 (sql -> INSERT .)
 
 
 state 81
 
-    (39) parlist -> parlist COMMA . expression
-    (19) expression -> . variable
-    (20) expression -> . INTEGER
-    (21) expression -> . FLOAT
-    (22) expression -> . STRING
-    (23) expression -> . MINUS expression
-    (24) expression -> . LPAREN expression RPAREN
-    (25) expression -> . expression PLUS expression
-    (26) expression -> . expression MINUS expression
-    (27) expression -> . expression MULTIPLY expression
-    (28) expression -> . expression DIVIDE expression
-    (29) expression -> . expression POWER expression
-    (36) variable -> . ID
-    (37) variable -> . ID LPAREN expression RPAREN
-    (38) variable -> . DBID
+    (24) sql -> UPDATE .
 
-    INTEGER         shift and go to state 17
-    FLOAT           shift and go to state 22
-    STRING          shift and go to state 15
-    MINUS           shift and go to state 14
-    LPAREN          shift and go to state 19
-    ID              shift and go to state 21
-    DBID            shift and go to state 16
+    include         reduce using rule 24 (sql -> UPDATE .)
+    outcsv          reduce using rule 24 (sql -> UPDATE .)
+    print           reduce using rule 24 (sql -> UPDATE .)
+    search          reduce using rule 24 (sql -> UPDATE .)
+    foreach         reduce using rule 24 (sql -> UPDATE .)
+    end             reduce using rule 24 (sql -> UPDATE .)
+    return          reduce using rule 24 (sql -> UPDATE .)
+    continue        reduce using rule 24 (sql -> UPDATE .)
+    if              reduce using rule 24 (sql -> UPDATE .)
+    def             reduce using rule 24 (sql -> UPDATE .)
+    let             reduce using rule 24 (sql -> UPDATE .)
+    list            reduce using rule 24 (sql -> UPDATE .)
+    $end            reduce using rule 24 (sql -> UPDATE .)
 
-    variable                       shift and go to state 20
-    expression                     shift and go to state 83
 
 state 82
 
-    (15) command -> list ID EQUALS LPAREN parlist RPAREN .
+    (9) command -> search ID as sql .
 
-    $end            reduce using rule 15 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    include         reduce using rule 9 (command -> search ID as sql .)
+    outcsv          reduce using rule 9 (command -> search ID as sql .)
+    print           reduce using rule 9 (command -> search ID as sql .)
+    search          reduce using rule 9 (command -> search ID as sql .)
+    foreach         reduce using rule 9 (command -> search ID as sql .)
+    end             reduce using rule 9 (command -> search ID as sql .)
+    return          reduce using rule 9 (command -> search ID as sql .)
+    continue        reduce using rule 9 (command -> search ID as sql .)
+    if              reduce using rule 9 (command -> search ID as sql .)
+    def             reduce using rule 9 (command -> search ID as sql .)
+    let             reduce using rule 9 (command -> search ID as sql .)
+    list            reduce using rule 9 (command -> search ID as sql .)
+    $end            reduce using rule 9 (command -> search ID as sql .)
 
 
 state 83
 
-    (39) parlist -> parlist COMMA expression .
-    (25) expression -> expression . PLUS expression
-    (26) expression -> expression . MINUS expression
-    (27) expression -> expression . MULTIPLY expression
-    (28) expression -> expression . DIVIDE expression
-    (29) expression -> expression . POWER expression
+    (22) sql -> SELECT .
 
-    RPAREN          reduce using rule 39 (parlist -> parlist COMMA expression .)
-    COMMA           reduce using rule 39 (parlist -> parlist COMMA expression .)
-    PLUS            shift and go to state 44
-    MINUS           shift and go to state 46
-    MULTIPLY        shift and go to state 45
-    DIVIDE          shift and go to state 38
-    POWER           shift and go to state 39
+    include         reduce using rule 22 (sql -> SELECT .)
+    outcsv          reduce using rule 22 (sql -> SELECT .)
+    print           reduce using rule 22 (sql -> SELECT .)
+    search          reduce using rule 22 (sql -> SELECT .)
+    foreach         reduce using rule 22 (sql -> SELECT .)
+    end             reduce using rule 22 (sql -> SELECT .)
+    return          reduce using rule 22 (sql -> SELECT .)
+    continue        reduce using rule 22 (sql -> SELECT .)
+    if              reduce using rule 22 (sql -> SELECT .)
+    def             reduce using rule 22 (sql -> SELECT .)
+    let             reduce using rule 22 (sql -> SELECT .)
+    list            reduce using rule 22 (sql -> SELECT .)
+    $end            reduce using rule 22 (sql -> SELECT .)
+
+
+state 84
+
+    (21) command -> list ID EQUALS LPAREN . parlist RPAREN
+    (45) parlist -> . parlist COMMA expression
+    (46) parlist -> . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
+
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
+
+    variable                       shift and go to state 15
+    expression                     shift and go to state 87
+    parlist                        shift and go to state 88
+
+state 85
+
+    (16) command -> def ID LPAREN RPAREN .
+
+    include         reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    outcsv          reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    print           reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    search          reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    foreach         reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    end             reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    return          reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    continue        reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    if              reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    def             reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    let             reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    list            reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+    $end            reduce using rule 16 (command -> def ID LPAREN RPAREN .)
+
+
+state 86
+
+    (17) command -> def ID LPAREN parlist . RPAREN
+    (45) parlist -> parlist . COMMA expression
+
+    RPAREN          shift and go to state 89
+    COMMA           shift and go to state 90
+
+
+state 87
+
+    (46) parlist -> expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
+
+    RPAREN          reduce using rule 46 (parlist -> expression .)
+    COMMA           reduce using rule 46 (parlist -> expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
+
+
+state 88
+
+    (21) command -> list ID EQUALS LPAREN parlist . RPAREN
+    (45) parlist -> parlist . COMMA expression
+
+    RPAREN          shift and go to state 91
+    COMMA           shift and go to state 90
+
+
+state 89
+
+    (17) command -> def ID LPAREN parlist RPAREN .
+
+    include         reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    outcsv          reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    print           reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    search          reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    foreach         reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    end             reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    return          reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    continue        reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    if              reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    def             reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    let             reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    list            reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+    $end            reduce using rule 17 (command -> def ID LPAREN parlist RPAREN .)
+
+
+state 90
+
+    (45) parlist -> parlist COMMA . expression
+    (25) expression -> . variable
+    (26) expression -> . INTEGER
+    (27) expression -> . FLOAT
+    (28) expression -> . STRING
+    (29) expression -> . MINUS expression
+    (30) expression -> . LPAREN expression RPAREN
+    (31) expression -> . expression PLUS expression
+    (32) expression -> . expression MINUS expression
+    (33) expression -> . expression MULTIPLY expression
+    (34) expression -> . expression DIVIDE expression
+    (35) expression -> . expression POWER expression
+    (42) variable -> . ID
+    (43) variable -> . ID LPAREN expression RPAREN
+    (44) variable -> . DBID
+
+    INTEGER         shift and go to state 9
+    FLOAT           shift and go to state 18
+    STRING          shift and go to state 12
+    MINUS           shift and go to state 1
+    LPAREN          shift and go to state 14
+    ID              shift and go to state 16
+    DBID            shift and go to state 4
+
+    variable                       shift and go to state 15
+    expression                     shift and go to state 92
+
+state 91
+
+    (21) command -> list ID EQUALS LPAREN parlist RPAREN .
+
+    include         reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    outcsv          reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    print           reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    search          reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    foreach         reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    end             reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    return          reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    continue        reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    if              reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    def             reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    let             reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    list            reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+    $end            reduce using rule 21 (command -> list ID EQUALS LPAREN parlist RPAREN .)
+
+
+state 92
+
+    (45) parlist -> parlist COMMA expression .
+    (31) expression -> expression . PLUS expression
+    (32) expression -> expression . MINUS expression
+    (33) expression -> expression . MULTIPLY expression
+    (34) expression -> expression . DIVIDE expression
+    (35) expression -> expression . POWER expression
+
+    RPAREN          reduce using rule 45 (parlist -> parlist COMMA expression .)
+    COMMA           reduce using rule 45 (parlist -> parlist COMMA expression .)
+    PLUS            shift and go to state 45
+    MINUS           shift and go to state 47
+    MULTIPLY        shift and go to state 46
+    DIVIDE          shift and go to state 43
+    POWER           shift and go to state 44
 

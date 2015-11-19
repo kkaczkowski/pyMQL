@@ -42,8 +42,7 @@ tokens = keywords + (
    'STRING',
    'SELECT',
    'INSERT',
-   'UPDATE',
-   'NEWLINE'
+   'UPDATE'
 )
 
 t_ignore = ' \t\x0c'
@@ -63,9 +62,9 @@ t_GE         = r'>='
 t_NE         = r'<>'
 t_COMMA      = r'\,'
 t_SEMI       = r';'
-t_SELECT     = r'SELECT .*?;'
-t_INSERT     = r'INSERT .*?;'
-t_UPDATE     = r'UPDATE .*?;'
+t_SELECT     = r'SELECT .*?(.|\n)*?;'
+t_INSERT     = r'INSERT .*?(.|\n)*?;'
+t_UPDATE     = r'UPDATE .*?(.|\n)*?;'
 t_STRING     = r'\".*?\"'
 t_FLOAT      = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))'
 
