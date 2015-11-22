@@ -25,20 +25,20 @@ def p_program(p):
         if not p[0]: p[0] = []
         if p[2]:
             p[0].append(p[2])
-            
+
             
 def p_program_function(p):
     '''program : program function
                | function
     '''
-    if len(p) == 2:
-        if not p[0]: p[0] = []
-        p[0].append(p[1])
+    if len(p) == 2 and p[1]:
+        p[0] = [['fun']]
+        p[0][0].append(p[1])
     elif len(p) == 3:
         p[0] = p[1]
-        if not p[0]: p[0] = []
+        if not p[0]: p[0] = [['fun']]
         if p[2]:
-            p[0].append(p[2])
+            p[0].append(['fun', p[2]])
             
     
 
@@ -115,12 +115,12 @@ def p_command_else(p):
 
 def p_command_def_empty(p):
 	'''command : def ID LPAREN RPAREN'''
-	p[0] = ('DEF', p[2])
+	p[0] = ('def', p[2])
 
     
 def p_command_def(p):
 	'''command : def ID LPAREN parlist RPAREN'''
-	p[0] = ('DEF', p[2], p[4])
+	p[0] = ('def', p[2], p[4])
 
 def p_command_connect(p):
     '''command : connect ID EQUALS DBPROVIDER LPAREN STRING RPAREN'''
@@ -145,10 +145,6 @@ def p_command_let_command_error(p):
 def p_command_list(p):
     '''command : list ID EQUALS LPAREN parlist RPAREN'''
     p[0] = ('list', p[2], p[5])
-    
-    
-
-
 
 
 def p_sql(p):
@@ -166,33 +162,33 @@ def p_sql(p):
 
 def p_expression_variable(p):
     '''expression : variable'''
-    p[0] = ('VAR',p[1])
+    p[0] = ('var',p[1])
     
     
 def p_expression_function(p):
     '''expression : function'''
-    p[0] = ('FUN',p[1])
+    p[0] = ('fun',p[1])
 
 
 def p_expression_number(p):
     '''expression : INTEGER
                   | FLOAT'''
-    p[0] = ('NUM',p[1])
+    p[0] = ('num',p[1])
 
 
 def p_expression_string(p):
 	'''expression : STRING'''
-	p[0] = ('STR', p[1])
+	p[0] = ('str', p[1])
 
 
 def p_expression_unary(p):
     '''expression : MINUS expression %prec UMINUS'''
-    p[0] = ('UNARY','-',p[2])
+    p[0] = ('unary','-',p[2])
 
 
 def p_expression_group(p):
     '''expression : LPAREN expression RPAREN'''
-    p[0] = ('GROUP',p[2])
+    p[0] = ('group',p[2])
 
 
 def p_expression_binop(p):
@@ -202,7 +198,7 @@ def p_expression_binop(p):
                   | expression DIVIDE expression
                   | expression POWER expression
     '''
-    p[0] = ('BINOP',p[2],p[1],p[3])
+    p[0] = ('binop',p[2],p[1],p[3])
 
 
 
@@ -218,7 +214,7 @@ def p_relexpression(p):
                      | expression EQUALS expression
                      | expression NE expression
     '''
-    p[0] = ('RELOP',p[2],p[1],p[3])
+    p[0] = ('relop',p[2],p[1],p[3])
 
 
 
