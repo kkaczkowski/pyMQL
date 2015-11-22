@@ -85,7 +85,7 @@ def p_command_foreach_enum(p):
 
 def p_command_end(p):
     '''command : end'''
-    p[0] = ('end',)
+    p[0] = ('end', None)
 
 
 def p_command_return(p):
@@ -100,7 +100,7 @@ def p_command_return_expr(p):
 
 def p_command_continue(p):
     '''command : continue'''
-    p[0] = ('continue',)
+    p[0] = ('continue', None)
 
 
 def p_command_if(p):
@@ -110,7 +110,7 @@ def p_command_if(p):
     
 def p_command_else(p):
     '''command : else'''
-    p[0] = ('else',)
+    p[0] = ('else', None)
     
 
 def p_command_def_empty(p):

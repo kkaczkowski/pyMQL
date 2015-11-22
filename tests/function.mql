@@ -1,4 +1,4 @@
 def sum(num1, num2)
-    print num + num
+    print (num + num)
     return num + num
 end
