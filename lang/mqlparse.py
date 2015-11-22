@@ -163,6 +163,11 @@ def p_sql(p):
 def p_expression_variable(p):
     '''expression : variable'''
     p[0] = ('var',p[1])
+
+
+def p_expression_dbvariable(p):
+    '''expression : dbvariable'''
+    p[0] = ('dbvar',p[1])
     
     
 def p_expression_function(p):
@@ -233,9 +238,17 @@ def p_function(p):
 
 
 def p_variable(p):
-    '''variable : ID
-                | DBID
-                '''
+    '''variable : ID'''
+    if len(p) == 2:
+       p[0] = (p[1],None,None)
+    elif len(p) == 5:
+       p[0] = (p[1],p[3],None)
+    else:
+       p[0] = (p[1],p[3],p[5])
+
+
+def p_dbvariable(p):
+    '''dbvariable : DBID'''
     if len(p) == 2:
        p[0] = (p[1],None,None)
     elif len(p) == 5:

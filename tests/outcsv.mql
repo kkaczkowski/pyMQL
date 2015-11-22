@@ -1,0 +1,3 @@
+outcsv mycsv in "data\test1.csv"
+list csvrecord = (1,2,3,4,"hello") 
+save csvrecord in mycsv

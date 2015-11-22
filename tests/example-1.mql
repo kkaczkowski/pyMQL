@@ -1,0 +1,7 @@
+list items = (1,2,3,4,5,6,7,8,9,10,"11")
+foreach el in items
+    print(el)
+    if int(el) > 9 then
+       print("Max")
+    end
+end

@@ -1,4 +1,4 @@
-import random
+import random, os
 
 genrandom = random.Random()
 genrandom.seed(os.urandom(100))

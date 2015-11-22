@@ -62,6 +62,8 @@ class MQLToPython:
             return '%s %s %s' % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
         elif etype == 'var':
             return self.token_var(node)
+        elif etype == 'dbvar':
+            return self.token_dbvar(node)
         elif etype == 'str':
             return self.token_str(node)
         elif etype == 'fun':
@@ -106,6 +108,10 @@ class MQLToPython:
 
     def token_var(self, node):
         return node[1][0]
+
+
+    def token_dbvar(self, node):
+        return '%s["%s"]' %tuple(node[1][0].split('@'))
 
 
     def token_str(self, node):
@@ -153,11 +159,10 @@ class MQLToPython:
 
 
     def token_save(self, node):
-        print(node)
-
+        return '%s.save_row(%s)' %(node[2], node[1])
 
     def token_outcsv(self, node):
-        print(node)
+        return '%s = OutCSV(%s)' %(node[1], node[2])
 
 
 
