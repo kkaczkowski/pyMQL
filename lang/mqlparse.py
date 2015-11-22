@@ -67,16 +67,6 @@ def p_command_save(p):
 def p_command_save_list(p):
     '''command : save LPAREN parlist RPAREN in ID'''
     p[0] = ('save', p[3], p[6])
-  
-
-def p_command_print_empty(p):
-	'''command : print optend'''
-	p[0] = ('print', None)
-    
-    
-def p_command_print_list(p):
-    '''command : print parlist'''
-    p[0] = ('print', p[2])
 
 
 def p_command_search(p):
@@ -266,17 +256,6 @@ def p_parlist(p):
        p[0].append(p[3])
     else:
        p[0] = [p[1]]
-
-
-def p_optend(p):
-    '''optend : COMMA 
-              | SEMI
-              |'''
-    if len(p)  == 2:
-         p[0] = p[1]
-    else:
-         p[0] = None
-
 
 
 # Error rule for syntax errors

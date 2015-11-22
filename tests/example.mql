@@ -31,16 +31,16 @@ let rndperson   = random(persons, 10)
 
 foreach person in persons
    if person@name = "Kowalski" then
-      print person@name
+      print(person@name)
       list csvrecord = (person@firstname, person@age, concat_name(person@firstName, person@lastName, person@last_name)) 
       save csvrecord in mycsv
       save (person@firstname, person@age, person@last_name) in mycsv
    else
-      print "No"
+      print("No")
       concat("First", "Last")
    end
 end
 
 foreach pos, person in persons
-   print pos, person@name
+   print (pos, person@name)
 end

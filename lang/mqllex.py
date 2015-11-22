@@ -2,25 +2,24 @@
 import yacc.lex as lex
 
 
-keywords = ('print', 
-    'as', 
-    'in', 
-    'search', 
-    'with',
-    'foreach', 
-    'end', 
-    'return', 
-    'continue', 
-    'if', 
-    'then',
-    'else', 
-    'def',  
-    'outcsv', 
-    'let', 
-    'list',
-    'import',
-    'connect',
-    'save')
+keywords = ('as', 
+            'in', 
+            'search', 
+            'with',
+            'foreach', 
+            'end', 
+            'return', 
+            'continue', 
+            'if', 
+            'then',
+            'else', 
+            'def',  
+            'outcsv', 
+            'let', 
+            'list',
+            'import',
+            'connect',
+            'save')
 
 
 tokens = keywords + (
@@ -40,7 +39,6 @@ tokens = keywords + (
    'GE',
    'NE',
    'COMMA',
-   'SEMI',
    'ID',
    'DBID',
    'STRING',
@@ -66,7 +64,6 @@ t_GT         = r'>'
 t_GE         = r'>='
 t_NE         = r'<>'
 t_COMMA      = r'\,'
-t_SEMI       = r';'
 t_SELECT     = r'SELECT .*?(.|\n)*?;'
 t_INSERT     = r'INSERT .*?(.|\n)*?;'
 t_UPDATE     = r'UPDATE .*?(.|\n)*?;'

@@ -13,11 +13,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.translate != None:
         filename = args.translate
-        fileout = filename + 'p'
-        with open(fileout, 'w') as pmql:
+        preprocesorout = filename + 'p'
+        pyprogram = filename.replace('mql', 'py')
+        with open(preprocesorout, 'w') as pmql:
             preprocesor.start(filename, pmql)
+            preprocesor.prepare_runtime(pyprogram)
         translator = MQLToPython()
-        translator.translate(fileout)
+        translator.translate(preprocesorout, pyprogram)
     elif args.lex != None:
         import lang.mqllex as lex
         data = open(args.lex, 'r').read()
