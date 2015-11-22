@@ -1,6 +1,8 @@
+print("Hello world...")
 print(2*(3+3))
 print(8*8*(9+9))
 print(2*sin(3+3))
 print((3+3)*sum(a1, a2))
 print(sin(cos(tan(9))))
 sum(10,sin(20+90))
+sum(number1 + number2)

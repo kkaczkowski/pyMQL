@@ -1,1 +1,4 @@
+let s = "One" + "Two" + "3"
 let name="Atkins"
+let value = 2*(4+4)
+let address = "street " + str(number)

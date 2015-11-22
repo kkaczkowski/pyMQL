@@ -1,4 +1,12 @@
+def hello()
+    print ("hello")
+end
+
 def sum(num1, num2)
-    print (num + num)
-    return num + num
+    print (num1 + num2)
+    return num1 + num2
+end
+
+def sum2(s1, s2)
+    return str(1+2) + (s1 + s2) + str(sin(10))
 end

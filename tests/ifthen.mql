@@ -1,2 +1,5 @@
-if 10 > 0 then
+if sin(10) > 0 then
+   print("Is bigegr")
+else
+   print("lower")
 end

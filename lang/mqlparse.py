@@ -115,7 +115,7 @@ def p_command_else(p):
 
 def p_command_def_empty(p):
 	'''command : def ID LPAREN RPAREN'''
-	p[0] = ('def', p[2])
+	p[0] = ('def', p[2], [])
 
     
 def p_command_def(p):

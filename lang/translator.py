@@ -5,15 +5,13 @@ import lang.runtime
 from pprint import pprint
 
 class MQLToPython:
-    
-    INDENT_PLUS  =  ('if', 'else', 'foreach', 'def')
-    INDENT_MINUS =  ('end', 'else')
-    
+
     def __init__(self):
         self.indent = 0
+        self.setindent = 0
         self.builtin = dir (__builtins__)
-    
-        
+
+
     def translate(self, input_mql, output_code):
         mql_source = open(input_mql, 'r').read()
         AST = lang.mqlparse.parse(mql_source, debug=False, tracking=False)
@@ -21,13 +19,17 @@ class MQLToPython:
         print('\n\nStart translate AST:')
         with open(output_code, 'a') as code:
             for node in AST:
-                print ('[T] %s' %node)
+                print ('[T] %s' %str(node))
                 scode = self.token(node)
                 print ('    %s' %scode)
-                code.write(scode)
-                code.write('\n')
-                
-                
+                if scode != None:
+                    code.write(' ' * self.indent)
+                    code.write(scode)
+                    code.write('\n')
+                self.indent += self.setindent
+                self.setindent = 0
+
+
     def token(self, node):
         token = node[0]
         translator = getattr(self, 'token_%s' %str(token), None)
@@ -47,13 +49,17 @@ class MQLToPython:
         elif etype == 'unary':
             if node[1] == '-': return "-"+str(node[2])
         elif etype == 'binop':
-            return "%s %s %s" % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
+            return '%s %s %s' % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
         elif etype == 'var':
-            return self.var_str(node[1])
+            return self.token_var(node)
+        elif etype == 'str':
+            return self.token_str(node)
         elif etype == 'fun':
-            print("--- fun ---")
-            print(node)
             return self.token_fun(node)
+
+
+    def token_relop(self, node):
+         return '%s %s %s' % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
 
 
     def token_fun(self, node):
@@ -67,24 +73,61 @@ class MQLToPython:
 
 
     def token_def(self, node):
-        '''def %{name}s(%{params}s):'''
-        print(self. token_def.__doc__)
+        self.setindent += 3
+        values = []
+        print (node)
+        for param in node[2]:
+            values.append(param[1][0])
+        return 'def %s(%s):' %(node[1], ','.join(values))
 
 
     def token_return(self, node):
-        '''return %{value}s'''
-        print(self. token_def.__doc__)
+        return 'return %s' %self.token(node[1])
 
 
     def token_end(self, node):
-        print(self. token_def.__doc__)
-        
+        self.setindent -= 3
+        return '\n'
+
     
     def token_num(self, node):
         return node[1]
 
 
     def token_var(self, node):
-        print(node)
         return node[1][0]
 
+
+    def token_str(self, node):
+        return node[1]
+
+
+    def token_if(self, node):
+        self.setindent += 3
+        return 'if %s:' %self.token(node[1])
+
+
+    def token_else(self, node):
+        self.indent -= 3
+        self.setindent += 3
+        return 'else:'
+
+
+    def token_let(self, node):
+        return '%s=%s' %(node[1], self.token(node[2]))
+
+
+    def token_foreach(self, node):
+        print(node)
+
+
+    def token_list(self, node):
+        print(node)       
+        values = []
+        print (node)
+        for param in node[2]:
+            values.append(str(self.token(param)))
+        return '%s = [%s]' %(node[1], ','.join(values))
+        
+        
+        

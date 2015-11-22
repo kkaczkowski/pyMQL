@@ -1,2 +1,3 @@
 list nums = (1,2,3)
-print nums
+list l1 = (1,2,3+3,nums)
+print (nums)
