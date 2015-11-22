@@ -1,5 +1,5 @@
 
 list nums = (1,2,3)
 foreach num in nums
-   print num
+   print (num)
 end

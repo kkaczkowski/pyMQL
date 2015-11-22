@@ -15,17 +15,26 @@ class MQLToPython:
     def translate(self, input_mql, output_code):
         mql_source = open(input_mql, 'r').read()
         AST = lang.mqlparse.parse(mql_source, debug=False, tracking=False)
+        
+        if AST == None:
+            print ('\n')
+            return
+        
         pprint(AST)
+        
         print('\n\nStart translate AST:')
         with open(output_code, 'a') as code:
             for node in AST:
                 print ('[T] %s' %str(node))
                 scode = self.token(node)
-                print ('    %s' %scode)
                 if scode != None:
-                    code.write(' ' * self.indent)
-                    code.write(scode)
-                    code.write('\n')
+                    if not isinstance(scode,tuple):
+                        scode = (scode,)
+                    for line in scode:
+                        print ('    %s' %line)
+                        code.write(' ' * self.indent)
+                        code.write(line)
+                        code.write('\n')
                 self.indent += self.setindent
                 self.setindent = 0
 
@@ -37,6 +46,7 @@ class MQLToPython:
         if translator != None:
             scode = translator(node)
         else:
+            print('-- E R R O R --')
             print('Unknown token: %s' %str(token))
             scode = self.token_fun(node)
         return scode
@@ -118,16 +128,37 @@ class MQLToPython:
 
 
     def token_foreach(self, node):
-        print(node)
+        self.setindent += 3
+        return 'for %s in %s:' %(node[1], node[2])
 
 
-    def token_list(self, node):
-        print(node)       
+    def token_list(self, node):      
         values = []
         print (node)
         for param in node[2]:
             values.append(str(self.token(param)))
         return '%s = [%s]' %(node[1], ','.join(values))
-        
-        
+
+
+    def token_connect(self, node):
+        return '%s = %s(%s)' %(node[1], node[2], node[3])
+
+
+    def token_search(self, node):
+        dataset = ('%s = DataSet()'         % node[1],
+                   '%s.set_connection(%s)'  %(node[1], node[2]),
+                   '%s.set_query("""%s""")' %(node[1], node[3]),
+                   '\n')
+        return dataset
+
+
+    def token_save(self, node):
+        print(node)
+
+
+    def token_outcsv(self, node):
+        print(node)
+
+
+
         

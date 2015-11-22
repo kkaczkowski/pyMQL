@@ -26,3 +26,11 @@ def randomize(collection):
         return collection[num]
     return []
 
+
+def Oracle(uri):
+    pass
+
+
+def PostgreSQL(uri):
+    pass
+

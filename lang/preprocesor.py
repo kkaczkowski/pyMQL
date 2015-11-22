@@ -12,7 +12,7 @@ def start(fsource, fout):
     
     
 def prepare_runtime(pyout):
-    runtime = ['functions', 'dataset']
+    runtime = ['oracle', 'postgres', 'functions', 'dataset']
     with open(pyout, 'w') as pythoncode:
         pythoncode.write('%s\n' %config.config['python'])
         
@@ -23,4 +23,4 @@ def prepare_runtime(pyout):
                 pythoncode.write('# *******  %s  *******\n' %libfile)
                 pythoncode.write(body)
                 pythoncode.write('\n')
-        pythoncode.write('# *******   T R A N S L A T E   M Q L   *******\n')
+        pythoncode.write('# *******   T R A N S L A T E   M Q L   *******\n\n')

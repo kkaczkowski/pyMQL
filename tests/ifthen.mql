@@ -3,3 +3,7 @@ if sin(10) > 0 then
 else
    print("lower")
 end
+
+if person@name = "Kowalski" then
+   print(person@age)
+end
