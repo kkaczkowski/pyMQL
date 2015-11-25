@@ -12,7 +12,7 @@ def start(fsource, fout):
     
     
 def prepare_runtime(pyout):
-    runtime = ['oracle', 'postgres', 'functions', 'dataset', 'outcsv']
+    runtime = ['functions', 'dataset', 'outcsv', 'dbconnection']
     with open(pyout, 'w') as pythoncode:
         pythoncode.write('%s\n' %config.config['python'])
         

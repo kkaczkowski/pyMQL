@@ -1,3 +1,0 @@
-
-class PostgreSQLProvider:
-    pass

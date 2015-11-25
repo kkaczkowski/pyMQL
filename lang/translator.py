@@ -159,7 +159,7 @@ class MQLToPython:
 
 
     def token_save(self, node):
-        return '%s.save_row(%s)' %(node[2], node[1])
+        return '%s.save(%s)' %(node[2], node[1])
 
     def token_outcsv(self, node):
         return '%s = OutCSV(%s)' %(node[1], node[2])
