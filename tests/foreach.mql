@@ -3,3 +3,7 @@ list nums = (1,2,3)
 foreach num in nums
    print (num)
 end
+
+foreach pos, num in nums
+   print (pos, num)
+end

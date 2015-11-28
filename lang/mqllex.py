@@ -17,8 +17,8 @@ keywords = ('as',
             'outcsv', 
             'let', 
             'list',
-            'import',
             'connect',
+            'import',
             'save')
 
 
@@ -44,8 +44,7 @@ tokens = keywords + (
    'STRING',
    'SELECT',
    'INSERT',
-   'UPDATE',
-   'DBPROVIDER'
+   'UPDATE'
 )
 
 t_ignore = ' \t\x0c'
@@ -68,8 +67,6 @@ t_SELECT     = r'SELECT .*?(.|\n)*?;'
 t_INSERT     = r'INSERT .*?(.|\n)*?;'
 t_UPDATE     = r'UPDATE .*?(.|\n)*?;'
 t_STRING     = r'\".*?\"'
-t_FLOAT      = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))'
-t_DBPROVIDER = r'Oracle|PostgreSQL'
 
 
 def t_error(t):
@@ -78,22 +75,28 @@ def t_error(t):
 
 
 def t_DBID(t):
-    r'[aA-zZ]*@[aA-zZ]*'
+    r'[aA-zZ]*@[aA-zZ_0-9]*'
     if t.value in keywords:
         t.type = t.value
     return t
 
 
 def t_ID(t):
-    r'[a-z][a-z0-9_]*'
+    r'[a-z][\w]*'
     if t.value in keywords:
         t.type = t.value
     return t
 
 
+def t_FLOAT(t):
+    r'(\d*\.\d+)'
+    t.value = float(t.value)
+    return t
+
+
 def t_INTEGER(t):
-    r'\d+'
-    t.value = float(t.value)    
+    r'(\d+)'
+    t.value = int(t.value)
     return t
 
 
@@ -110,7 +113,7 @@ def t_NEWLINE(t):
 lex.lex(debug=False)
 lexer = lex.lex()
 
-	
+
 def test_lex(data):
     lexer.input(data)
     

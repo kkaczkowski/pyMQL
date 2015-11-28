@@ -8,6 +8,8 @@ def fetchdict(cursor):
     return row
 
 
+
+
 class DBConnection:
     '''
     Abstract class for connect to PostgreSQL or Oracle.
@@ -28,10 +30,10 @@ class DBConnection:
     
     
     def execute(self, sSQL):
-        logging.debug("SQL: %s" %sSQL)
         if self.connection is None:
             self.connect()
            
+        logging.debug("SQL: %s" %sSQL)
         self.cursor = self.get_cursor()
         self.cursor.execute(sSQL)
         
@@ -88,21 +90,32 @@ class DBConnection:
 
 class OracleConnection(DBConnection):
         
-    def __init__(self):
+    def __init__(self, uri):
         DBConnection.__init__(self)
+        self.uri = uri
 
-        
-    def connect(self, uri):       
-        logging.debug("Connect to oracle...")
-        
+
+    def connect(self):       
+        host, port, database, username, userpassword, schema = self.uri.split(';')
         dsn_tns = cx_Oracle.makedsn(host, port, database)
         
-        logging.debug('Oracle DSN: %s  user=%s' %(dsn_tns, user_name))
-        
-        self.connection = cx_Oracle.connect(user     = user_name, 
-                                            password = user_password, 
+        self.connection = cx_Oracle.connect(user     = username, 
+                                            password = userpassword, 
                                             dsn      = dsn_tns)
 
-        logging.debug("Connect to oracle [DONE]")
-        
         return self.connection
+
+
+
+
+def oracle(uri):
+    conn = OracleConnection(uri)
+    host, port, database, username, userpassword, schema = uri.split(';')
+    logging.debug('Connect to Oracle: host=%s port=%s database=%s username=%s schema=%s' %( host, port, database, username, schema))
+    conn.connect()
+    conn.close()
+    return conn
+
+
+def postgres(uri):
+    pass

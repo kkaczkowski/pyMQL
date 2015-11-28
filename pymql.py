@@ -26,7 +26,8 @@ if __name__ == "__main__":
         translator = MQLToPython()
         translator.translate(preprocesorout, pyprogram)
         if args.run != None:
-            os.system("%s %s" %(PYTHON_PATH, pyprogram))
+            print("\n\nStart MQL Program (%s)..." %pyprogram)
+            os.system('%s "%s"' %(PYTHON_PATH, pyprogram))
     elif args.lex != None:
         import lang.mqllex as lex
         data = open(args.lex, 'r').read()

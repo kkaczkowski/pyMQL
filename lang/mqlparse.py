@@ -81,7 +81,7 @@ def p_command_foreach(p):
 
 def p_command_foreach_enum(p):
     '''command : foreach ID COMMA ID in ID'''
-    p[0] = ('foreach', p[2], p[4], p[6])
+    p[0] = ('foreach2', p[2], p[4], p[6])
 
 def p_command_end(p):
     '''command : end'''
@@ -122,9 +122,10 @@ def p_command_def(p):
 	'''command : def ID LPAREN parlist RPAREN'''
 	p[0] = ('def', p[2], p[4])
 
+
 def p_command_connect(p):
-    '''command : connect ID EQUALS DBPROVIDER LPAREN STRING RPAREN'''
-    p[0] = ('connect', p[2], p[4], p[6])
+    '''command : connect ID EQUALS expression'''
+    p[0] = ('connect', p[2], p[4])
 
 
 def p_command_let(p):
@@ -132,9 +133,9 @@ def p_command_let(p):
 	p[0] = ('let', p[2], p[4])
     
     
-def p_command_let_command(p):
-	'''command : let ID EQUALS command'''
-	p[0] = ('let', p[2], p[4])
+#def p_command_let_command(p):
+#    '''command : let ID EQUALS command'''
+#    p[0] = ('let', p[2], p[4])
     
     
 def p_command_let_command_error(p):
@@ -168,22 +169,26 @@ def p_expression_variable(p):
 def p_expression_dbvariable(p):
     '''expression : dbvariable'''
     p[0] = ('dbvar',p[1])
-    
-    
-def p_expression_function(p):
-    '''expression : function'''
-    p[0] = ('fun',p[1])
 
 
-def p_expression_number(p):
-    '''expression : INTEGER
-                  | FLOAT'''
-    p[0] = ('num',p[1])
+def p_expression_float(p):
+    '''expression : FLOAT'''
+    p[0] = ('float', p[1])
+
+
+def p_expression_integer(p):
+    '''expression : INTEGER'''
+    p[0] = ('int', p[1])
 
 
 def p_expression_string(p):
 	'''expression : STRING'''
 	p[0] = ('str', p[1])
+
+
+def p_expression_function(p):
+    '''expression : function'''
+    p[0] = ('fun',p[1])
 
 
 def p_expression_unary(p):
@@ -228,8 +233,12 @@ def p_relexpression(p):
 ########################################## 
 
 def p_function(p):
-    '''function : ID LPAREN parlist RPAREN'''
-    p[0] = (p[1], p[3])
+    '''function : ID LPAREN parlist RPAREN
+                | ID LPAREN RPAREN'''
+    if len(p) == 4:
+        p[0] = (p[1], '')
+    else:
+        p[0] = (p[1], p[3])
 
 
 ########################################## 

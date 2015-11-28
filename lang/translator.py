@@ -54,7 +54,7 @@ class MQLToPython:
 
     def token_binop(self, node):
         etype = node[0]
-        if etype == 'num': return str(node[1])
+        if etype in ['float', 'int']: return str(node[1])
         elif etype == 'group': return "(%s)" % self.token_binop(node[1])
         elif etype == 'unary':
             if node[1] == '-': return "-"+str(node[2])
@@ -102,7 +102,11 @@ class MQLToPython:
         return '\n'
 
     
-    def token_num(self, node):
+    def token_int(self, node):
+        return node[1]
+    
+    
+    def token_float(self, node):
         return node[1]
 
 
@@ -136,6 +140,11 @@ class MQLToPython:
     def token_foreach(self, node):
         self.setindent += 3
         return 'for %s in %s:' %(node[1], node[2])
+    
+    
+    def token_foreach2(self, node):
+        self.setindent += 3
+        return 'for %s, %s in enumerate(%s):' %(node[1], node[2], node[3])
 
 
     def token_list(self, node):      
@@ -147,13 +156,13 @@ class MQLToPython:
 
 
     def token_connect(self, node):
-        return '%s = %s(%s)' %(node[1], node[2], node[3])
+        return '%s = %s' %(node[1], self.token(node[2]))
 
 
     def token_search(self, node):
         dataset = ('%s = DataSet()'         % node[1],
-                   '%s.set_connection(%s)'  %(node[1], node[2]),
-                   '%s.set_query("""%s""")' %(node[1], node[3]),
+                   '%s.connection = %s'  %(node[1], node[2]),
+                   '%s.query = """%s"""' %(node[1], node[3]),
                    '\n')
         return dataset
 
