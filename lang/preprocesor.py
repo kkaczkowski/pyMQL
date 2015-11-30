@@ -1,10 +1,13 @@
-import os
+# -*- coding: utf-8 -*-
+
+import os, codecs
 import config.config as config
 
 def start(fsource, fout):
-    with open(fsource, 'r') as source:
+    print('Preprocesor load <%s>' %fsource)
+    with codecs.open(fsource, 'r', encoding='utf8') as source:
         for line in source:
-            if 'import "' in line:
+            if not line.strip().startswith('#') and 'import "' in line:
                 fsubsource = line.replace('import "', '').replace('"', '').strip()
                 start(fsubsource, fout)
             else:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import lang.mqllex as mqllex
 import yacc.yacc as yacc

@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
 import argparse, os
 import lang.preprocesor as preprocesor

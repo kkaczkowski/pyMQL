@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import lang.mqllex
 import lang.mqlparse
 import yacc.yacc as yacc

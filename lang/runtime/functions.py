@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random, os, logging
 import pprint as nice
 
