@@ -72,6 +72,7 @@ class MQLToPython:
             return self.token_fun(node)
 
 
+
     def token_relop(self, node):
          return '%s %s %s' % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
 
@@ -155,6 +156,10 @@ class MQLToPython:
         for param in node[2]:
             values.append(str(self.token(param)))
         return '%s = [%s]' %(node[1], ','.join(values))
+
+
+    def token_slice(self, node):
+        return '%s[%s]' %(node[1],node[2])
 
 
     def token_connect(self, node):

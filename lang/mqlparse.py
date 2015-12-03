@@ -202,6 +202,11 @@ def p_expression_group(p):
     p[0] = ('group',p[2])
 
 
+def p_expression_slice(p):
+    '''expression : ID LQPAREN SLICE RQPAREN'''
+    p[0] = ('slice',p[1], p[3])
+
+
 def p_expression_binop(p):
     '''expression : expression PLUS expression
                   | expression MINUS expression
