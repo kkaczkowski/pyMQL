@@ -70,6 +70,8 @@ class MQLToPython:
             return self.token_str(node)
         elif etype == 'fun':
             return self.token_fun(node)
+        elif etype == 'slice':
+            return '%s[%s]' %(node[1],node[2])
 
 
 

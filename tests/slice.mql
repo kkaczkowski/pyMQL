@@ -1,2 +1,3 @@
 let name="Albert"
 print(name[1:3])
+let name2=name+"_"+name[:1]
