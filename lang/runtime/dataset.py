@@ -131,6 +131,13 @@ class DataSet(list):
         return self._rows[pos]
 
 
-
-
+    def __add__(self, o):
+        if isinstance(o, DataSet):
+            self._rows = self._rows + o.rows
+        elif isinstance(o, tuple):
+            self._rows = self._rows + o
+        elif isinstance(o, list):
+            self._rows = self._rows + o
+            
+        return self._rows
         
