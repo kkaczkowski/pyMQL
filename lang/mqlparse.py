@@ -134,11 +134,6 @@ def p_command_let(p):
 	p[0] = ('let', p[2], p[4])
     
     
-#def p_command_let_command(p):
-#    '''command : let ID EQUALS command'''
-#    p[0] = ('let', p[2], p[4])
-    
-    
 def p_command_let_command_error(p):
 	'''command : let error'''
 	p[0] = 'Invalid let command.'
@@ -190,6 +185,11 @@ def p_expression_string(p):
 def p_expression_function(p):
     '''expression : function'''
     p[0] = ('fun',p[1])
+    
+    
+def p_expression_slice(p):
+    '''expression : slice'''
+    p[0] = ('slice',p[1])
 
 
 def p_expression_unary(p):
@@ -202,11 +202,6 @@ def p_expression_group(p):
     p[0] = ('group',p[2])
 
 
-def p_expression_slice(p):
-    '''expression : ID LQPAREN SLICE RQPAREN'''
-    p[0] = ('slice',p[1], p[3])
-
-
 def p_expression_binop(p):
     '''expression : expression PLUS expression
                   | expression MINUS expression
@@ -216,11 +211,6 @@ def p_expression_binop(p):
     '''
     p[0] = ('binop',p[2],p[1],p[3])
 
-
-
-########################################## 
-#### Relational expressions
-########################################## 
 
 def p_relexpression(p):
     '''relexpression : expression LT expression
@@ -245,6 +235,22 @@ def p_function(p):
         p[0] = (p[1], '')
     else:
         p[0] = (p[1], p[3])
+        
+        
+########################################## 
+#### Slice
+########################################## 
+def p_slice(p):
+    '''slice : ID LQPAREN expression COLON expression RQPAREN
+             | ID LQPAREN COLON expression RQPAREN
+             | ID LQPAREN expression COLON RQPAREN
+             | ID LQPAREN expression RQPAREN'''
+    if len(p) == 5:
+        p[0] = (p[1], p[3])
+    elif len(p) == 6:
+        p[0] = (p[1], p[3], p[4])
+    elif len(p) == 7:
+        p[0] = (p[1], p[3], p[4] ,p[5])
 
 
 ########################################## 

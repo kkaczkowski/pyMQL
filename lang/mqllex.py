@@ -35,7 +35,7 @@ tokens = keywords + (
    'RPAREN',
    'LQPAREN',
    'RQPAREN',
-   'SLICE',
+   'COLON',
    'EQUALS',
    'LT',
    'LE',
@@ -63,6 +63,7 @@ t_LPAREN     = r'\('
 t_RPAREN     = r'\)' 
 t_LQPAREN    = r'\['
 t_RQPAREN    = r'\]'
+t_COLON      = r'\:'
 t_LT         = r'<'
 t_LE         = r'<='
 t_GT         = r'>'
@@ -91,11 +92,6 @@ def t_ID(t):
     r'[a-z][\w]*'
     if t.value in keywords:
         t.type = t.value
-    return t
-    
-    
-def t_SLICE(t):
-    r'(\d+\:\d+)|(\d+\:)|(\:\d+)'
     return t
 
 

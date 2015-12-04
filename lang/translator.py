@@ -70,8 +70,6 @@ class MQLToPython:
             return self.token_str(node)
         elif etype == 'fun':
             return self.token_fun(node)
-        elif etype == 'slice':
-            return '%s[%s]' %(node[1],node[2])
 
 
 
@@ -161,7 +159,17 @@ class MQLToPython:
 
 
     def token_slice(self, node):
-        return '%s[%s]' %(node[1],node[2])
+        args = node[1]
+        
+        if len(args) == 2:
+            return '%s[%s]' %(args[0],self.token(args[1]))
+        elif len(args) == 3:
+            if args[1] == ":":
+                return '%s[:%s]' %(args[0],self.token(args[2]))
+            else:
+                return '%s[%s:]' %(args[0],self.token(args[1]))
+        elif len(args) == 4:
+            return '%s[%s:%s]' %(args[0],self.token(args[1]), self.token(args[3]))
 
 
     def token_connect(self, node):
