@@ -74,7 +74,12 @@ class MQLToPython:
 
 
     def token_relop(self, node):
-         return '%s %s %s' % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
+        if node[1] == '==>':
+            return '%s in %s' % (self.token_binop(node[2]),self.token_binop(node[3]))
+        elif node[1] == '~=':
+            return 're.findall(%s, %s)' %(self.token(node[2]), self.token(node[3]))
+        else:
+            return '%s %s %s' % (self.token_binop(node[2]),node[1],self.token_binop(node[3]))
 
 
     def token_fun(self, node):
@@ -102,7 +107,7 @@ class MQLToPython:
 
     def token_end(self, node):
         self.setindent -= 3
-        return '\n'
+        return 'pass\n'
 
     
     def token_int(self, node):

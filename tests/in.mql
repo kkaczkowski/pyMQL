@@ -1,0 +1,3 @@
+if "name" ==> "my name is..." then
+   print ("Found name")
+end

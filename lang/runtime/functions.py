@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import random, os, logging
+import random, os, logging, re
 import pprint as nice
 
 random.seed(os.urandom(100))
@@ -38,6 +38,7 @@ def sample(collection, count):
 
 def shuffle(collection):
     return random.shuffle(collection)
+
 
 def pprint(collection):
     nice.pprint(collection)

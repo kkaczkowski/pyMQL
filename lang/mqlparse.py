@@ -219,6 +219,8 @@ def p_relexpression(p):
                      | expression GE expression
                      | expression EQUALS expression
                      | expression NE expression
+                     | expression IN expression
+                     | expression RE expression
     '''
     p[0] = ('relop',p[2],p[1],p[3])
 

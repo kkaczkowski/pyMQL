@@ -42,6 +42,8 @@ tokens = keywords + (
    'GT',
    'GE',
    'NE',
+   'IN',
+   'RE',
    'COMMA',
    'ID',
    'DBID',
@@ -69,6 +71,8 @@ t_LE         = r'<='
 t_GT         = r'>'
 t_GE         = r'>='
 t_NE         = r'<>'
+t_IN         = r'==>'
+t_RE         = r'~='
 t_COMMA      = r'\,'
 t_SELECT     = r'SELECT .*?(.|\n)*?;'
 t_INSERT     = r'INSERT .*?(.|\n)*?;'

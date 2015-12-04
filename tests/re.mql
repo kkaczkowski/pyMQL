@@ -1,0 +1,2 @@
+if "^Ala.*?" ~= "Ala ma kota" then
+end
