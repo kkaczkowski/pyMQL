@@ -2,3 +2,4 @@ let name=name[1:]
 let name=name[:1]
 let name=name[1:1]
 let name=name[1+1:len("ALA")]
+let name=name[:3] + "OK"
