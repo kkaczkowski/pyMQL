@@ -4,7 +4,7 @@ import os, codecs
 import config.config as config
 
 def start(fsource, fout):
-    print('Preprocesor load <%s>' %fsource)
+    print('Preprocessor load <%s>' %fsource)
     with codecs.open(fsource, 'r', encoding='utf8') as source:
         for line in source:
             if not line.strip().startswith('#') and 'import "' in line:

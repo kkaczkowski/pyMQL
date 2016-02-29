@@ -86,38 +86,38 @@ def t_error(t):
 
 
 def t_DBID(t):
-    r'[aA-zZ]*@[aA-zZ_0-9]*'
+    r"""[aA-zZ]*@[aA-zZ_0-9]*"""
     if t.value in keywords:
         t.type = t.value
     return t
 
 
 def t_ID(t):
-    r'[a-z][\w]*'
+    r"""[a-z][\w]*"""
     if t.value in keywords:
         t.type = t.value
     return t
 
 
 def t_FLOAT(t):
-    r'(\d*\.\d+)'
+    r"""(\d*\.\d+)"""
     t.value = float(t.value)
     return t
 
 
 def t_INTEGER(t):
-    r'(\d+)'
+    r"""(\d+)"""
     t.value = int(t.value)
     return t
 
 
 def t_COMMENT(t):
-    r'\#.*'
+    r"""\#.*"""
     pass
 
 
 def t_NEWLINE(t):
-    r'\n+'
+    r"""\n+"""
     t.lexer.lineno += 1
 
 
