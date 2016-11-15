@@ -25,8 +25,6 @@ if __name__ == "__main__":
                 filename = args.run
                 params = args.run
 
-        print(args.run)
-        print(type(args.run))
         preprocessor_out = filename + 'p'
         py_program = filename.replace('mql', 'py')
 
