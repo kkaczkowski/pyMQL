@@ -4,6 +4,7 @@ import lang.mqllex
 import lang.mqlparse
 import yacc.yacc as yacc
 from pprint import pprint
+from lang.translator import MQLToPython
 
 
 def runcmd():
@@ -14,5 +15,5 @@ def runcmd():
             break
         if not s:
             continue
-        result = lang.mqlparse.parse(s + '\n')
-        pprint(result)
+        translator = MQLToPython()
+        pprint(translator.translate_string(s))

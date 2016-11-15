@@ -13,8 +13,8 @@ class MQLToPython:
         self.setindent = 0
         self.builtin = dir(__builtins__)
 
-    def translate(self, input_mql, output_code):
-        mql_source = open(input_mql, 'r').read()
+    def translate_file(self, input_file_mql: str, output_file_py: str):
+        mql_source = open(input_file_mql, 'r').read()
         AST = lang.mqlparse.parse(mql_source, debug=False, tracking=False)
 
         if AST is None:
@@ -24,7 +24,7 @@ class MQLToPython:
         pprint(AST)
 
         print('\n\nStart translate AST:')
-        with open(output_code, 'a') as code:
+        with open(output_file_py, 'a') as code:
             for node in AST:
                 print('[T] %s' % str(node))
                 scode = self.token(node)
@@ -38,6 +38,31 @@ class MQLToPython:
                         code.write('\n')
                 self.indent += self.setindent
                 self.setindent = 0
+
+
+    def translate_string(self, input_mql: str):
+        result = ""
+        AST = lang.mqlparse.parse(input_mql, debug=False, tracking=False)
+
+        if AST is None:
+            print('\n')
+            return
+
+        for node in AST:
+            print('[T] %s' % str(node))
+            scode = self.token(node)
+            if scode is not None:
+                if not isinstance(scode, tuple):
+                    scode = (scode,)
+                for line in scode:
+                    print('    %s' % line)
+                    result += ' ' * self.indent
+                    result += line
+                    result +='\n'
+            self.indent += self.setindent
+            self.setindent = 0
+        return result
+
 
     def token(self, node):
         token = node[0]

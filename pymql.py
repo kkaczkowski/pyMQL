@@ -32,7 +32,7 @@ if __name__ == "__main__":
             preprocessor.start(filename, pmql)
             preprocessor.prepare_runtime(py_program)
         translator = MQLToPython()
-        translator.translate(preprocessor_out, py_program)
+        translator.translate_file(preprocessor_out, py_program)
         if args.run is not None:
             print("\n\nStart MQL Program (%s)..." % py_program)
             os.system('%s "%s" %s' % (PYTHON_PATH, py_program, params))
