@@ -1,1 +1,1 @@
-connect oracle = Oracle("")
+connect oracle = oracle("")
