@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import argparse, os
+import argparse
+import os
 import lang.preprocessor as preprocessor
 from config.config import PYTHON_PATH
 from lang.translator import MQLToPython
@@ -28,15 +29,15 @@ if __name__ == "__main__":
         translator.translate(preprocessor_out, py_program)
         if args.run is not None:
             print("\n\nStart MQL Program (%s)..." % py_program)
-            os.system('%s "%s"' % (PYTHON_PATH, py_program))
+            os.system('%s "%s" %s' % (PYTHON_PATH, py_program, args.run))
     elif args.lex is not None:
         import lang.mqllex as lex
 
         data = open(args.lex, 'r').read()
         lex.test_lex(data)
-    elif args.preprocesor is not None:
-        with open(args.preprocesor + 'p', 'w') as pmql:
-            preprocessor.start(args.preprocesor, pmql)
+    elif args.preprocessor is not None:
+        with open(args.preprocessor + 'p', 'w') as pmql:
+            preprocessor.start(args.preprocessor, pmql)
     else:
         import lang.mqlcmd as cmd
 

@@ -2,7 +2,7 @@ import sys, logging
 
 PYTHON_PATH = '/usr/bin/python3'
 if sys.platform == 'win32':
-    PYTHON_PATH = 'c:/python34/python.exe'
+    PYTHON_PATH = 'c:/python35/python.exe'
 
 config = {'python': '#!%s' % PYTHON_PATH}
 

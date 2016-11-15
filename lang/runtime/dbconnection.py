@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import cx_Oracle, logging
+import logging
+
+try:
+    import cx_Oracle
+except Exception as ex:
+    print("Please add oracle driver!")
 
 
 def fetchdict(cursor):

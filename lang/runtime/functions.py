@@ -2,6 +2,10 @@
 
 import random, os, logging, re
 import pprint as nice
+import sys
+
+
+argv = sys.argv
 
 random.seed(os.urandom(100))
 logging.basicConfig(handlers=[logging.FileHandler('mql.log'), 
