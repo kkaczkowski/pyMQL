@@ -1,5 +1,5 @@
 # connection definition with oracle
-connect oracle = Oracle("")
+connect oracle = oracle("")
 outcsv mycsv in "data\test1.csv"
 
 
